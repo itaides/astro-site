@@ -1,6 +1,6 @@
 # Arctica Digital
 
-Static website for [Arctica Digital](https://arctica.digital) — a branding and digital design agency.
+Personal website for [Arctica Digital](https://arctica.digital) — solo web development & digital design by Itai Ben Zeev.
 
 ## Tech Stack
 
