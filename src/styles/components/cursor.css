@@ -1,0 +1,34 @@
+/* --- Custom Cursor --- */
+.cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.35s var(--ease-spring), height 0.35s var(--ease-spring), background 0.3s, opacity 0.3s;
+    opacity: 0.9;
+}
+
+.cursor-dot--hover {
+    width: 56px;
+    height: 56px;
+    opacity: 0.15;
+    background: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+    .cursor-dot {
+        display: none;
+    }
+}
+
+@media (pointer: coarse) {
+    .cursor-dot {
+        display: none;
+    }
+}

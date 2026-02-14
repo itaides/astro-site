@@ -1,0 +1,185 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const featured = {
+	title: "Eventimio",
+	category: "AI-Powered SaaS Platform",
+	year: "2025",
+	description:
+		"Event organizers needed a modern way to manage photos, identify guests automatically, and deliver real-time event experiences. I architected and built the complete SaaS platform — facial recognition with AWS Rekognition, photo galleries, real-time guest features, running on a modular monolith architecture with Hono and Cloudflare Workers.",
+	services: [
+		"React",
+		"TypeScript",
+		"Hono",
+		"Cloudflare Workers",
+		"PostgreSQL",
+		"Drizzle ORM",
+		"AWS Rekognition",
+		"Cloudflare R2",
+		"TanStack Router",
+		"Turborepo",
+	],
+	result: "Full-featured SaaS platform demonstrating full-stack ownership, AI integration, and cloud-native architecture.",
+	own: true,
+};
+
+const projects = [
+	{
+		title: "The Kibbutz",
+		category: "Branding & Web Platform",
+		year: "2024",
+		description:
+			"A global advocacy organisation needed a digital platform to amplify awareness for Jewish community safety. I designed and developed a purpose-driven website that turns complex stories into an engaging, shareable digital experience — now reaching audiences across 30+ countries.",
+		services: [
+			"Brand Identity",
+			"Web Design",
+			"Full-Stack Development",
+			"Content Strategy",
+		],
+		result: "Global reach across 30+ countries with a purpose-driven digital experience.",
+	},
+	{
+		title: "Oh My Box",
+		category: "E-Commerce & Branding",
+		year: "2023",
+		description:
+			"A creative entrepreneur had an idea for curated date-night boxes but no digital presence. I built the brand from scratch — logo, visual identity, and a fully custom WooCommerce store with subscription management, gift configurations, and a checkout flow optimised for conversion.",
+		services: [
+			"E-Commerce",
+			"Brand Identity",
+			"WordPress / WooCommerce",
+			"UX Design",
+		],
+		result: "Complete brand launch from zero to revenue-generating e-commerce store.",
+	},
+	{
+		title: "Give a Smile",
+		category: "Web Design & Social Impact",
+		year: "2023",
+		description:
+			"A social enterprise wanted to make charitable giving feel as easy and joyful as buying a gift. I developed the full platform — product builder, charity partner integration, and a gifting flow where every purchase automatically supports a cause chosen by the recipient.",
+		services: ["Web Design", "UX/UI", "Full-Stack Development", "Branding"],
+		result: "Complete gifting ecosystem where every purchase partners with a charity.",
+	},
+];
+---
+
+<BaseLayout
+	title="Projects — Arctica Digital"
+	description="Selected projects by Itai Ben Zeev — SaaS platforms, web development, e-commerce, and AI integration."
+>
+	<Header slot="header" />
+
+	<section class="works-hero">
+		<div class="container">
+			<h1 class="works-title">
+				<span class="hero-line">Projects I've</span>
+				<span class="hero-line"
+					><span class="text-outline">built &</span></span
+				>
+				<span class="hero-line"
+					><span class="gradient-text">shipped.</span></span
+				>
+			</h1>
+			<p class="works-intro reveal-up">
+				From AI-powered SaaS platforms to conversion-optimised
+				e-commerce — every project here was personally architected,
+				developed, and deployed by me.
+			</p>
+		</div>
+	</section>
+
+	<!-- FEATURED: EVENTIMIO -->
+	<section class="section section--dark featured-section">
+		<div class="container">
+			<div class="featured-work reveal-up">
+				<div class="featured-head">
+					<span class="featured-badge">My Own Product</span>
+					<div class="featured-meta">
+						<span>{featured.category}</span><span
+							>{featured.year}</span
+						>
+					</div>
+				</div>
+				<h2 class="featured-name">{featured.title}</h2>
+				<div class="featured-body">
+					<div class="featured-left">
+						<p class="featured-desc">{featured.description}</p>
+						<p class="featured-result">
+							<strong>Result:</strong>
+							{featured.result}
+						</p>
+					</div>
+					<div class="featured-right">
+						<span class="feat-tag-label">Tech Stack</span>
+						<div class="featured-tags">
+							{
+								featured.services.map((s) => (
+									<span class="feat-tag">{s}</span>
+								))
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CLIENT PROJECTS -->
+	<section class="section">
+		<div class="container">
+			<span class="section-number reveal-up">Client Projects</span>
+			<div class="works-list">
+				{
+					projects.map((p) => (
+						<article class="work-item reveal-up">
+							<div class="work-image">
+								<img
+									src={
+										p.title === "The Kibbutz"
+											? "/images/projects/archivekibbutz.jpg"
+											: p.title === "Oh My Box"
+												? "/images/projects/ohmybox-showcase.jpg"
+												: "/images/projects/voucher-section.jpg"
+									}
+									alt={p.title}
+									loading="lazy"
+									class=""
+								/>
+								<div class="work-image-overlay">
+									<span class="work-view-label">
+										View Details
+									</span>
+								</div>
+							</div>
+							<div class="work-content">
+								<div class="work-meta">
+									<>
+										<span class="work-cat">
+											{p.category}
+										</span>
+										<span class="work-year">{p.year}</span>
+									</>
+								</div>
+								<h2 class="work-title">{p.title}</h2>
+								<p class="work-desc">{p.description}</p>
+								<p class="work-result">
+									<strong>Result:</strong> {p.result}
+								</p>
+								<div class="work-tags">
+									{p.services.map((s) => (
+										<span class="work-tag">{s}</span>
+									))}
+								</div>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<Footer slot="footer" />
+</BaseLayout>

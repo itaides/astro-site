@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const posts = await getCollection("blog");
+// Sort by date descending
+posts.sort(
+	(a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+---
+
+<BaseLayout
+	title="Dev Insights — Arctica Digital"
+	description="Technical articles on web development, performance, WordPress, and modern animation."
+>
+	<Header slot="header" />
+
+	<section class="insights-hero">
+		<div class="container">
+			<span class="section-label reveal-up">Development Insights</span>
+			<h1 class="ins-title">
+				<span class="hero-line">Technical</span>
+				<span class="hero-line"
+					><span class="text-outline">articles &</span></span
+				>
+				<span class="hero-line"
+					><span class="gradient-text">thinking.</span></span
+				>
+			</h1>
+			<p class="ins-intro reveal-up">
+				I write about the tools, techniques, and patterns I use in real
+				client work — performance optimisation, modern CSS, WordPress,
+				and animation.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="posts-list reveal-stagger">
+				{
+					posts.map((post, index) => (
+						<a href={`/insights/${post.id}`} class="post-row">
+							<span class="post-num">
+								{(index + 1).toString().padStart(2, "0")}
+							</span>
+							<div class="post-main">
+								<h2 class="post-title">{post.data.title}</h2>
+								<p class="post-excerpt">{post.data.excerpt}</p>
+							</div>
+							<div class="post-side">
+								<span class="post-tag">{post.data.tag}</span>
+								<span class="post-date">{post.data.date}</span>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<Footer slot="footer" />
+</BaseLayout>

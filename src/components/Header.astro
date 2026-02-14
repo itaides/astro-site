@@ -1,0 +1,101 @@
+---
+const currentPath = Astro.url.pathname;
+const navLinks = [
+	{ label: "About", href: "/about" },
+	{ label: "Works", href: "/works" },
+	{ label: "Insights", href: "/insights" },
+	{ label: "Contact", href: "/contact" },
+];
+---
+
+<header class="site-header" id="site-header">
+	<div class="header-inner">
+		<a href="/" class="logo" aria-label="Arctica Digital - Home">
+			<span class="logo-text">arctica<span class="logo-dot">.</span></span
+			>
+		</a>
+
+		<nav class="nav-desktop" aria-label="Main navigation">
+			{
+				navLinks.map((link) => (
+					<a
+						href={link.href}
+						class:list={[
+							"nav-link",
+							{
+								active:
+									currentPath === link.href ||
+									(link.href !== "/" &&
+										currentPath.startsWith(link.href)),
+							},
+						]}
+					>
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+
+		<div class="header-right">
+			<a href="/contact" class="header-cta">
+				<span>Let's Talk</span>
+				<svg
+					width="14"
+					height="14"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					><line x1="7" y1="17" x2="17" y2="7"></line><polyline
+						points="7 7 17 7 17 17"></polyline></svg
+				>
+			</a>
+			<button
+				id="nav-toggle"
+				class="nav-toggle"
+				aria-label="Toggle menu"
+				aria-expanded="false"
+			>
+				<div class="hamburger"><span></span><span></span></div>
+			</button>
+		</div>
+	</div>
+</header>
+
+<div id="nav-menu" class="nav-overlay-menu">
+	<div class="nav-overlay-content">
+		<nav class="nav-overlay-links">
+			{
+				navLinks.map((link, i) => (
+					<a
+						href={link.href}
+						class="nav-overlay-link"
+						style={`--i: ${i}`}
+					>
+						<span class="nav-overlay-number">0{i + 1}</span>
+						<span class="nav-overlay-label">{link.label}</span>
+					</a>
+				))
+			}
+		</nav>
+		<div class="nav-overlay-footer">
+			<a href="/contact" class="btn btn--primary nav-overlay-cta">
+				<span>Let's Talk</span>
+				<svg
+					width="14"
+					height="14"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					><line x1="7" y1="17" x2="17" y2="7"></line><polyline
+						points="7 7 17 7 17 17"></polyline></svg
+				>
+			</a>
+			<a href="mailto:hello@arctica.digital" class="nav-email"
+				>hello@arctica.digital</a
+			>
+		</div>
+	</div>
+</div>
+<div id="nav-overlay" class="nav-backdrop"></div>

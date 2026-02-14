@@ -1,0 +1,390 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const projects = [
+	{
+		title: "The Kibbutz",
+		category: "Branding & Web",
+		year: "2024",
+		description:
+			"A purpose-driven digital platform amplifying awareness for Jewish community safety — now reaching audiences in 30+ countries.",
+		image: "/images/projects/archivekibbutz.jpg",
+	},
+	{
+		title: "Oh My Box",
+		category: "E-Commerce",
+		year: "2023",
+		description:
+			"Full brand + WooCommerce store for curated date-night boxes — from logo to conversion-optimised checkout.",
+		image: "/images/projects/ohmybox-showcase.jpg",
+	},
+	{
+		title: "Give a Smile",
+		category: "Social Impact",
+		year: "2023",
+		description:
+			"A gifting platform where every purchase partners with a charity — product builder, checkout, and charity integration.",
+		image: "/images/projects/voucher-section.jpg",
+	},
+];
+
+/* Hick's Law: 6 → 4 services. Strategy merged into each. Performance folded into Ongoing. */
+const services = [
+	{
+		num: "01",
+		title: "SaaS & Web Applications",
+		tags: [
+			"React",
+			"Next.js",
+			"TypeScript",
+			"Cloudflare Workers",
+			"PostgreSQL",
+		],
+		desc: "Complete SaaS products from architecture to deployment — React and TypeScript frontend, Hono backends on Cloudflare Workers, PostgreSQL with Drizzle ORM.",
+	},
+	{
+		num: "02",
+		title: "AI & ML Integration",
+		tags: ["AWS Rekognition", "LangChain", "Vector DBs", "LLM Features"],
+		desc: "Production AI features — facial recognition, LLM-powered assistants, and semantic search integrated into web applications.",
+	},
+	{
+		num: "03",
+		title: "WordPress & E-Commerce",
+		tags: ["Sage / Roots", "ACF", "WooCommerce", "Headless"],
+		desc: "Custom WordPress themes with Sage/Roots and ACF. E-commerce with WooCommerce or headless setups with a React frontend.",
+	},
+	{
+		num: "04",
+		title: "Ongoing Partnership",
+		tags: ["CI/CD", "Performance", "Monitoring", "Direct Access"],
+		desc: "Same senior engineer, long-term. Maintenance, CI/CD pipelines, Core Web Vitals optimisation, and infrastructure — direct access, full context.",
+	},
+];
+
+const techStack = [
+	{ label: "Frontend", items: "React · Next.js · Vue · Astro · TypeScript" },
+	{ label: "Backend", items: "Node.js · Hono · Python · GraphQL" },
+	{ label: "Cloud", items: "Cloudflare Workers · R2 · Edge Deploy" },
+	{ label: "AI", items: "AWS Rekognition · LangChain · Vector DBs" },
+];
+---
+
+<BaseLayout
+	title="Itai Ben Zeev — Senior Fullstack Developer | Arctica Digital"
+>
+	<Header slot="header" />
+
+	<script>
+		import "@dotlottie/player-component";
+	</script>
+
+	<!-- HERO -->
+	<section class="hero">
+		<div class="container">
+			<div class="hero__center">
+				<h1 class="hero__title">
+					<span class="hero-line"
+						>I craft <dotlottie-player
+							src="/images/high-res-transparent.lottie"
+							background="transparent"
+							speed="1"
+							direction="1"
+							playMode="normal"
+							loop
+							autoplay
+							class="hero-mascot"></dotlottie-player> modern</span
+					>
+					<span class="hero-line"
+						>web <em class="hero-italic">experiences</em><span
+							class="hero-dot">.</span
+						></span
+					>
+				</h1>
+				<p class="hero__tagline reveal-stagger">
+					<span class="hero-italic">Strategy-led branding</span> & <span
+						class="hero-italic">digital design</span
+					>
+				</p>
+			</div>
+		</div>
+		<div class="hero__scroll">
+			<div class="scroll-line-wrap">
+				<div class="scroll-line-fill"></div>
+			</div>
+			<span>Scroll</span>
+		</div>
+	</section>
+
+	<!-- TECH STRIP -->
+	<section class="tech-strip">
+		<div class="container">
+			<div class="tech-grid reveal-stagger">
+				{
+					techStack.map((t) => (
+						<div class="tech-item">
+							<span class="tech-label">{t.label}</span>
+							<span class="tech-items">{t.items}</span>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- ABOUT -->
+	<section class="about-section section">
+		<div class="container">
+			<div class="about-grid">
+				<div class="about-left reveal-up">
+					<span class="section-number">01 — About</span>
+					<h2 class="about-heading">
+						Staff-level expertise, <em
+							>from architecture to deployment.</em
+						>
+					</h2>
+				</div>
+				<div class="about-right reveal-up">
+					<p>
+						You work directly with me — a senior fullstack developer
+						with 7+ years of experience, currently building
+						enterprise-grade systems at Riskified. I bring CI/CD
+						pipelines, scalable architecture, and production-level
+						code quality to every client project.
+					</p>
+					<div class="about-stats">
+						<div class="mini-stat-card">
+							<span class="mini-stat-value">50+</span><span
+								class="mini-stat-label">Projects</span
+							>
+						</div>
+						<div class="mini-stat-card">
+							<span class="mini-stat-value">7+</span><span
+								class="mini-stat-label">Years Exp</span
+							>
+						</div>
+						<div class="mini-stat-card">
+							<span class="mini-stat-value">Full</span><span
+								class="mini-stat-label">Stack</span
+							>
+						</div>
+					</div>
+					<a href="/about" class="btn--ghost"
+						>Learn more about me <span class="arrow">→</span></a
+					>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- SERVICES (Hick's Law: 4 focused services) -->
+	<section class="services-section section">
+		<div class="container">
+			<div class="services-header reveal-up">
+				<span class="section-number">02 — Services</span>
+				<h2 class="services-heading">
+					What I <span class="text-outline">do</span>
+				</h2>
+				<p class="services-intro">
+					Full ownership of the stack — from architecture and AI
+					integration to CI/CD and production monitoring.
+				</p>
+			</div>
+			<div class="services-list reveal-stagger">
+				{
+					services.map((s) => (
+						<div class="service-row" data-service>
+							<span class="service-num">{s.num}</span>
+							<div class="service-main">
+								<h3 class="service-title">{s.title}</h3>
+								<p class="service-desc">{s.desc}</p>
+							</div>
+							<div class="service-tags">
+								{s.tags.map((tag) => (
+									<span class="service-tag">{tag}</span>
+								))}
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- FEATURED PROJECT (Eventimio) -->
+	<section class="featured-section section section--dark">
+		<div class="container">
+			<div class="featured-inner reveal-up">
+				<span class="section-number">03 — Featured Build</span>
+				<div class="featured-grid">
+					<div class="featured-content">
+						<span class="featured-badge">My Own Product</span>
+						<h2 class="featured-title">Eventimio</h2>
+						<p class="featured-subtitle">
+							AI-Powered Event Management SaaS
+						</p>
+						<p class="featured-desc">
+							I architected and shipped my own SaaS platform — AI
+							facial recognition, real-time guest experiences, and
+							modular monolith architecture on Cloudflare Workers.
+						</p>
+						<div class="featured-tech">
+							<span>React</span><span>TypeScript</span><span
+								>Hono</span
+							><span>Cloudflare Workers</span><span
+								>AWS Rekognition</span
+							>
+						</div>
+					</div>
+					<div class="featured-stats">
+						<div class="f-stat">
+							<span class="f-stat-value">Full Stack</span><span
+								class="f-stat-label"
+								>Architecture to Deploy</span
+							>
+						</div>
+						<div class="f-stat">
+							<span class="f-stat-value">AI/ML</span><span
+								class="f-stat-label">Facial Recognition</span
+							>
+						</div>
+						<div class="f-stat">
+							<span class="f-stat-value">Cloud-Native</span><span
+								class="f-stat-label">Edge Deployed</span
+							>
+						</div>
+						<div class="f-stat">
+							<span class="f-stat-value">Monorepo</span><span
+								class="f-stat-label">Turborepo + CI/CD</span
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- PROJECTS -->
+	<section class="projects-section section">
+		<div class="container">
+			<div class="projects-header reveal-up">
+				<span class="section-number">04 — Client Work</span>
+				<div class="projects-header-row">
+					<h2 class="projects-heading">
+						Selected <span class="text-outline">projects</span>
+					</h2>
+					<a href="/works" class="btn--ghost projects-all-link"
+						>View all <span class="arrow">→</span></a
+					>
+				</div>
+			</div>
+			<div class="projects-grid reveal-stagger">
+				{
+					projects.map((p, i) => (
+						<a
+							href="/works"
+							class="project-card"
+							style={`--delay: ${i * 0.08}s`}
+						>
+							<div class="project-img-wrap">
+								<img
+									src={p.image}
+									alt={p.title}
+									loading="lazy"
+									class=""
+								/>
+								<div class="project-overlay">
+									<span class="project-overlay-text">
+										View Project
+									</span>
+								</div>
+							</div>
+							<div class="project-info">
+								<div class="project-meta">
+									<>
+										<span class="project-cat">
+											{p.category}
+										</span>
+										<span class="project-year">
+											{p.year}
+										</span>
+									</>
+								</div>
+								<h3 class="project-name">{p.title}</h3>
+								<p class="project-desc">{p.description}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- CLIENTS (Peak-End: moved BEFORE testimonial) -->
+	<section class="partners-section">
+		<div class="marquee-partners">
+			<div class="marquee-track-partners">
+				<span>Oh My Box</span><span class="sep">·</span>
+				<span>Studio Lusso</span><span class="sep">·</span>
+				<span>Habite</span><span class="sep">·</span>
+				<span>Stonegate</span><span class="sep">·</span>
+				<span>Itzhaki</span><span class="sep">·</span>
+				<span>Etrog</span><span class="sep">·</span>
+				<span>The Grinder</span><span class="sep">·</span>
+				<span>Estar Medical</span><span class="sep">·</span>
+				<span>Give a Smile</span><span class="sep">·</span>
+				<span>Minrav</span><span class="sep">·</span>
+				<span>Oh My Box</span><span class="sep">·</span>
+				<span>Studio Lusso</span><span class="sep">·</span>
+				<span>Habite</span><span class="sep">·</span>
+				<span>Stonegate</span><span class="sep">·</span>
+				<span>Itzhaki</span><span class="sep">·</span>
+				<span>Etrog</span><span class="sep">·</span>
+				<span>The Grinder</span><span class="sep">·</span>
+				<span>Estar Medical</span><span class="sep">·</span>
+			</div>
+		</div>
+	</section>
+
+	<!-- TESTIMONIAL (Peak-End: strong ending → footer CTA) -->
+	<section class="testimonial-section section">
+		<div class="container">
+			<div class="testimonial-card reveal-up">
+				<span class="section-number">05 — Working With Itai</span>
+				<div class="testimonial-body">
+					<svg
+						class="quote-icon"
+						width="40"
+						height="40"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						><path
+							d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"
+						></path><path
+							d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"
+						></path></svg
+					>
+					<blockquote class="testimonial-quote">
+						It's better than I could have ever imagined. The
+						collaboration was fluid, thanks to the understanding and
+						professionalism of working directly with Itai.
+					</blockquote>
+					<div class="testimonial-author">
+						<div class="author-avatar">LF</div>
+						<div>
+							<strong>Lisa Fellous</strong><span
+								>Graphic Designer</span
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<Footer slot="footer" />
+</BaseLayout>

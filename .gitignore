@@ -1,0 +1,37 @@
+# build output
+dist/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# lock files (bun.lock is committed)
+package-lock.json
+yarn.lock
+
+# logs
+*.log
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+
+# misc
+*.tgz
