@@ -1,43 +1,59 @@
-# Astro Starter Kit: Minimal
+# Arctica Digital
 
-```sh
-npm create astro@latest -- --template minimal
+Static website for [Arctica Digital](https://arctica.digital) — a branding and digital design agency.
+
+## Tech Stack
+
+- **[Astro](https://astro.build)** — Static site generator
+- **[Lightning CSS](https://lightningcss.dev)** — CSS transformer & minifier
+- **[Zod](https://zod.dev)** — Form validation (client + server)
+- **[Bun](https://bun.sh)** — Package manager & runtime
+- **[Cloudflare Pages](https://pages.cloudflare.com)** — Hosting & deployment
+
+## Getting Started
+
+```bash
+# Install dependencies
+bun install
+
+# Start dev server
+bun run dev
+
+# Production build
+bun run build
+
+# Preview production build
+bun run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Project Structure
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
+```
+├── docs/               # PRD, design system, site vision
+├── functions/api/      # Cloudflare Pages Functions (contact form)
+├── public/images/      # Static assets
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/     # Header, Footer
+│   ├── content/blog/   # Blog posts (Markdown)
+│   ├── layouts/        # Base layout
+│   ├── pages/          # Routes (Home, About, Works, Contact, Insights)
+│   ├── scripts/        # Client-side TypeScript
+│   └── styles/         # BEM CSS (base, components, pages)
+├── astro.config.mjs    # Astro + Lightning CSS config
+└── wrangler.jsonc      # Cloudflare Pages config
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The site is deployed to **Cloudflare Pages** with automatic builds on push to `main`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Setup
 
-## 🧞 Commands
+1. Connect the repo in [Cloudflare Pages Dashboard](https://dash.cloudflare.com)
+2. Set build command: `bun run build`
+3. Set output directory: `dist`
+4. Enable **Email Routing** for the contact form (`hello@arctica.digital`)
 
-All commands are run from the root of the project, from a terminal:
+### Contact Form
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The contact form uses a **Cloudflare Pages Function** (`functions/api/contact.ts`) with the `send_email` binding for server-side email delivery. No third-party APIs or exposed keys.
