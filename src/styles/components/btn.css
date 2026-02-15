@@ -16,6 +16,13 @@
     overflow: hidden;
 }
 
+/* Keep text & icons above the ::before gradient overlay */
+.btn>span,
+.btn>svg {
+    position: relative;
+    z-index: 1;
+}
+
 .btn::before {
     content: '';
     position: absolute;
