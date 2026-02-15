@@ -1,74 +1,68 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const projects = [
-	{
-		title: "The Kibbutz",
-		category: "Branding & Web",
-		year: "2024",
-		description:
-			"A purpose-driven digital platform amplifying awareness for Jewish community safety — now reaching audiences in 30+ countries.",
-		image: "/images/projects/archivekibbutz.jpg",
-	},
-	{
-		title: "Oh My Box",
-		category: "E-Commerce",
-		year: "2023",
-		description:
-			"Full brand + WooCommerce store for curated date-night boxes — from logo to conversion-optimised checkout.",
-		image: "/images/projects/ohmybox-showcase.jpg",
-	},
-	{
-		title: "Give a Smile",
-		category: "Social Impact",
-		year: "2023",
-		description:
-			"A gifting platform where every purchase partners with a charity — product builder, checkout, and charity integration.",
-		image: "/images/projects/voucher-section.jpg",
-	},
+  {
+    title: 'The Kibbutz',
+    category: 'Branding & Web',
+    year: '2024',
+    description:
+      'A purpose-driven digital platform amplifying awareness for Jewish community safety — now reaching audiences in 30+ countries.',
+    image: '/images/projects/archivekibbutz.jpg',
+  },
+  {
+    title: 'Oh My Box',
+    category: 'E-Commerce',
+    year: '2023',
+    description:
+      'Full brand + WooCommerce store for curated date-night boxes — from logo to conversion-optimised checkout.',
+    image: '/images/projects/ohmybox-showcase.jpg',
+  },
+  {
+    title: 'Give a Smile',
+    category: 'Social Impact',
+    year: '2023',
+    description:
+      'A gifting platform where every purchase partners with a charity — product builder, checkout, and charity integration.',
+    image: '/images/projects/voucher-section.jpg',
+  },
 ];
 
 /* Hick's Law: 6 → 4 services. Strategy merged into each. Performance folded into Ongoing. */
 const services = [
-	{
-		num: "01",
-		title: "SaaS & Web Applications",
-		tags: [
-			"React",
-			"Next.js",
-			"TypeScript",
-			"Cloudflare Workers",
-			"PostgreSQL",
-		],
-		desc: "Complete SaaS products from architecture to deployment — React and TypeScript frontend, Hono backends on Cloudflare Workers, PostgreSQL with Drizzle ORM.",
-	},
-	{
-		num: "02",
-		title: "AI & ML Integration",
-		tags: ["AWS Rekognition", "LangChain", "Vector DBs", "LLM Features"],
-		desc: "Production AI features — facial recognition, LLM-powered assistants, and semantic search integrated into web applications.",
-	},
-	{
-		num: "03",
-		title: "WordPress & E-Commerce",
-		tags: ["Sage / Roots", "ACF", "WooCommerce", "Headless"],
-		desc: "Custom WordPress themes with Sage/Roots and ACF. E-commerce with WooCommerce or headless setups with a React frontend.",
-	},
-	{
-		num: "04",
-		title: "Ongoing Partnership",
-		tags: ["CI/CD", "Performance", "Monitoring", "Direct Access"],
-		desc: "Same senior engineer, long-term. Maintenance, CI/CD pipelines, Core Web Vitals optimisation, and infrastructure — direct access, full context.",
-	},
+  {
+    num: '01',
+    title: 'SaaS & Web Applications',
+    tags: ['React', 'Next.js', 'TypeScript', 'Cloudflare Workers', 'PostgreSQL'],
+    desc: 'Complete SaaS products from architecture to deployment — React and TypeScript frontend, Hono backends on Cloudflare Workers, PostgreSQL with Drizzle ORM.',
+  },
+  {
+    num: '02',
+    title: 'AI & ML Integration',
+    tags: ['AWS Rekognition', 'LangChain', 'Vector DBs', 'LLM Features'],
+    desc: 'Production AI features — facial recognition, LLM-powered assistants, and semantic search integrated into web applications.',
+  },
+  {
+    num: '03',
+    title: 'WordPress & E-Commerce',
+    tags: ['Sage / Roots', 'ACF', 'WooCommerce', 'Headless'],
+    desc: 'Custom WordPress themes with Sage/Roots and ACF. E-commerce with WooCommerce or headless setups with a React frontend.',
+  },
+  {
+    num: '04',
+    title: 'Ongoing Partnership',
+    tags: ['CI/CD', 'Performance', 'Monitoring', 'Direct Access'],
+    desc: 'Same senior engineer, long-term. Maintenance, CI/CD pipelines, Core Web Vitals optimisation, and infrastructure — direct access, full context.',
+  },
 ];
 
 const techStack = [
-	{ label: "Frontend", items: "React · Next.js · Vue · Astro · TypeScript" },
-	{ label: "Backend", items: "Node.js · Hono · Python · GraphQL" },
-	{ label: "Cloud", items: "Cloudflare Workers · R2 · Edge Deploy" },
-	{ label: "AI", items: "AWS Rekognition · LangChain · Vector DBs" },
+  { label: 'Frontend', items: 'React · Next.js · Vue · Astro · TypeScript' },
+  { label: 'Backend', items: 'Node.js · Hono · Python · GraphQL' },
+  { label: 'Cloud', items: 'Cloudflare Workers · R2 · Edge Deploy' },
+  { label: 'AI', items: 'AWS Rekognition · LangChain · Vector DBs' },
 ];
 ---
 

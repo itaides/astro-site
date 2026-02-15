@@ -4,137 +4,146 @@
    ============================================ */
 
 :root {
-    /* Colors — Warm Light Palette */
-    --color-bg: #f7f6f3;
-    --color-bg-warm: #f2f0ec;
-    --color-bg-cool: #eef0f5;
-    --color-surface: #ffffff;
-    --color-surface-elevated: #ffffff;
-    --color-surface-subtle: #faf9f7;
-    --color-surface-hover: #f0eeea;
-    --color-surface-active: #e8e6e2;
-    --color-text: #1a1715;
-    --color-text-secondary: #4a4540;
-    --color-text-muted: #8a8580;
-    --color-text-dim: #b5b0a8;
-    --color-accent: #3b3bff;
-    --color-accent-hover: #2929d6;
-    --color-accent-soft: rgba(59, 59, 255, 0.08);
-    --color-accent-medium: rgba(59, 59, 255, 0.15);
-    --color-accent-2: #8b5cf6;
-    --color-accent-3: #06b6d4;
-    --color-success: #10b981;
-    --color-border: rgba(26, 23, 21, 0.07);
-    --color-border-hover: rgba(26, 23, 21, 0.16);
-    --color-border-subtle: rgba(26, 23, 21, 0.04);
-    --color-border-strong: rgba(26, 23, 21, 0.22);
-    --gradient-accent: linear-gradient(135deg, #3b3bff 0%, #8b5cf6 100%);
-    --gradient-accent-wide: linear-gradient(135deg, #3b3bff 0%, #8b5cf6 50%, #06b6d4 100%);
-    --gradient-warm: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-warm) 100%);
-    --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 100%);
-    --gradient-dark: linear-gradient(135deg, #1a1715 0%, #2d2a26 100%);
-    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+  /* Colors — Warm Light Palette */
+  --color-bg: #f7f6f3;
+  --color-bg-warm: #f2f0ec;
+  --color-bg-cool: #eef0f5;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-surface-subtle: #faf9f7;
+  --color-surface-hover: #f0eeea;
+  --color-surface-active: #e8e6e2;
+  --color-text: #1a1715;
+  --color-text-secondary: #4a4540;
+  --color-text-muted: #8a8580;
+  --color-text-dim: #b5b0a8;
+  --color-text-inverse: #ffffff;
+  --color-text-inverse-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-inverse-muted: rgba(255, 255, 255, 0.4);
+  --color-accent: #3b3bff;
+  --color-accent-hover: #2929d6;
+  --color-accent-soft: rgba(59, 59, 255, 0.08);
+  --color-accent-medium: rgba(59, 59, 255, 0.15);
+  --color-accent-2: #8b5cf6;
+  --color-accent-3: #06b6d4;
+  --color-success: #10b981;
+  --color-border: rgba(26, 23, 21, 0.07);
+  --color-border-hover: rgba(26, 23, 21, 0.16);
+  --color-border-subtle: rgba(26, 23, 21, 0.04);
+  --color-border-strong: rgba(26, 23, 21, 0.22);
+  --color-border-inverse: rgba(255, 255, 255, 0.12);
+  --gradient-accent: linear-gradient(135deg, #3b3bff 0%, #8b5cf6 100%);
+  --gradient-accent-wide: linear-gradient(135deg, #3b3bff 0%, #8b5cf6 50%, #06b6d4 100%);
+  --gradient-warm: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-warm) 100%);
+  --gradient-card: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  --gradient-dark: linear-gradient(135deg, #1a1715 0%, #2d2a26 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
 
-    /* Shadows — Layered for depth */
-    --shadow-xs: 0 1px 2px rgba(26, 23, 21, 0.04);
-    --shadow-sm: 0 1px 3px rgba(26, 23, 21, 0.06), 0 1px 2px rgba(26, 23, 21, 0.04);
-    --shadow-md: 0 4px 6px -1px rgba(26, 23, 21, 0.06), 0 2px 4px -2px rgba(26, 23, 21, 0.04);
-    --shadow-lg: 0 10px 25px -3px rgba(26, 23, 21, 0.08), 0 4px 6px -4px rgba(26, 23, 21, 0.04);
-    --shadow-xl: 0 20px 50px -5px rgba(26, 23, 21, 0.1), 0 8px 10px -6px rgba(26, 23, 21, 0.04);
-    --shadow-2xl: 0 25px 60px -8px rgba(26, 23, 21, 0.15), 0 10px 20px -6px rgba(26, 23, 21, 0.06);
-    --shadow-glow: 0 0 40px rgba(59, 59, 255, 0.12);
-    --shadow-glow-lg: 0 0 60px rgba(59, 59, 255, 0.18), 0 0 120px rgba(59, 59, 255, 0.06);
-    --shadow-card-hover: 0 24px 48px -12px rgba(26, 23, 21, 0.14), 0 8px 16px -4px rgba(26, 23, 21, 0.06);
-    --shadow-accent: 0 10px 30px -5px rgba(59, 59, 255, 0.2);
+  /* Shadows — Layered for depth */
+  --shadow-xs: 0 1px 2px rgba(26, 23, 21, 0.04);
+  --shadow-sm: 0 1px 3px rgba(26, 23, 21, 0.06), 0 1px 2px rgba(26, 23, 21, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(26, 23, 21, 0.06), 0 2px 4px -2px rgba(26, 23, 21, 0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(26, 23, 21, 0.08), 0 4px 6px -4px rgba(26, 23, 21, 0.04);
+  --shadow-xl: 0 20px 50px -5px rgba(26, 23, 21, 0.1), 0 8px 10px -6px rgba(26, 23, 21, 0.04);
+  --shadow-2xl: 0 25px 60px -8px rgba(26, 23, 21, 0.15), 0 10px 20px -6px rgba(26, 23, 21, 0.06);
+  --shadow-glow: 0 0 40px rgba(59, 59, 255, 0.12);
+  --shadow-glow-lg: 0 0 60px rgba(59, 59, 255, 0.18), 0 0 120px rgba(59, 59, 255, 0.06);
+  --shadow-card-hover:
+    0 24px 48px -12px rgba(26, 23, 21, 0.14), 0 8px 16px -4px rgba(26, 23, 21, 0.06);
+  --shadow-accent: 0 10px 30px -5px rgba(59, 59, 255, 0.2);
 
-    /* Typography — Refined Scale */
-    --font-heading: 'Outfit', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+  /* Typography — Refined Scale */
+  --font-heading: "Outfit", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
 
-    --fs-display: clamp(3.25rem, 7vw, 6.5rem);
-    --fs-hero: clamp(2.75rem, 7.5vw, 6rem);
-    --fs-h1: clamp(2.125rem, 4.5vw, 3.5rem);
-    --fs-h2: clamp(1.75rem, 3.25vw, 2.625rem);
-    --fs-h3: clamp(1.125rem, 1.75vw, 1.4375rem);
-    --fs-body: 1.0625rem;
-    --fs-body-lg: 1.1875rem;
-    --fs-small: 0.9375rem;
-    --fs-label: 0.8125rem;
-    --fs-xs: 0.75rem;
-    --fs-xxs: 0.6875rem;
+  --fs-display: clamp(3.25rem, 7vw, 6.5rem);
+  --fs-hero: clamp(2.75rem, 7.5vw, 6rem);
+  --fs-h1: clamp(2.125rem, 4.5vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 3.25vw, 2.625rem);
+  --fs-h3: clamp(1.125rem, 1.75vw, 1.4375rem);
+  --fs-body: 1.0625rem;
+  --fs-body-lg: 1.1875rem;
+  --fs-small: 0.9375rem;
+  --fs-label: 0.8125rem;
+  --fs-xs: 0.75rem;
+  --fs-xxs: 0.6875rem;
 
-    /* Spacing — Musical rhythm */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: clamp(2rem, 5vw, 4rem);
-    --space-4xl: clamp(3rem, 8vw, 6rem);
-    --space-5xl: clamp(4rem, 10vw, 8rem);
-    --space-section: clamp(4rem, 12vw, 11rem);
+  /* Spacing — Musical rhythm */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: clamp(2rem, 5vw, 4rem);
+  --space-4xl: clamp(3rem, 8vw, 6rem);
+  --space-5xl: clamp(4rem, 10vw, 8rem);
+  --space-section: clamp(4rem, 12vw, 11rem);
 
-    /* Layout */
-    --container-max: 1420px;
-    --container-padding: clamp(1.5rem, 5vw, 3.5rem);
-    --header-height: 72px;
+  /* Layout */
+  --container-max: 1420px;
+  --container-padding: clamp(1.5rem, 5vw, 3.5rem);
+  --header-height: 72px;
 
-    /* Radius — Consistent scale */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-xl: 28px;
-    --radius-2xl: 36px;
-    --radius-pill: 100px;
+  /* Radius — Consistent scale */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-pill: 100px;
 
-    /* Motion */
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
-    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: 0.2s var(--ease-out);
-    --transition-normal: 0.45s var(--ease-out);
-    --transition-slow: 0.8s var(--ease-out);
-    --transition-spring: 0.5s var(--ease-spring);
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.2s var(--ease-out);
+  --transition-normal: 0.45s var(--ease-out);
+  --transition-slow: 0.8s var(--ease-out);
+  --transition-spring: 0.5s var(--ease-spring);
 }
 
 /* --- Reset & Base --- */
 *,
 *::before,
 *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto;
 }
 
 body {
-    font-family: var(--font-body);
-    font-size: var(--fs-body);
-    line-height: 1.65;
-    color: var(--color-text);
-    background: var(--color-bg);
-    overflow-x: hidden;
-    font-feature-settings: 'cv01', 'cv03', 'cv04', 'cv11';
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  color: var(--color-text);
+  background: var(--color-bg);
+  overflow-x: hidden;
+  font-feature-settings: "cv01", "cv03", "cv04", "cv11";
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
-    transition: color var(--transition-fast);
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 h1,
@@ -143,46 +152,46 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    line-height: 1.05;
-    color: var(--color-text);
-    letter-spacing: -0.035em;
-    text-wrap: balance;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--color-text);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 p {
-    color: var(--color-text-secondary);
-    max-width: 52ch;
-    text-wrap: pretty;
+  color: var(--color-text-secondary);
+  max-width: 52ch;
+  text-wrap: pretty;
 }
 
 ul,
 ol {
-    list-style: none;
+  list-style: none;
 }
 
 button {
-    font-family: var(--font-body);
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: inherit;
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
 }
 
 ::selection {
-    background: var(--color-accent);
-    color: #fff;
+  background: var(--color-accent);
+  color: #fff;
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

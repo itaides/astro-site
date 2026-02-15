@@ -1,97 +1,64 @@
-import { z } from 'zod';
-
-// --- Sanitization: strip ALL HTML tags ---
-function sanitize(str: string): string {
-    return str.replace(/<[^>]*>/g, '').trim();
-}
-
-// --- Zod schema (shared with server) ---
-const ContactSchema = z.object({
-    name: z.string().min(1, 'Name is required').max(100).transform(sanitize),
-    email: z.string().email('Please enter a valid email').max(254).transform(sanitize),
-    company: z.string().max(100).transform(sanitize).optional().default(''),
-    message: z.string().max(2000).transform(sanitize).optional().default(''),
-    interests: z.array(z.string()).optional().default([]),
-    budget: z.string().optional().default(''),
-    website: z.string().max(0, 'Bot detected').optional().default(''), // honeypot
-});
+import { actions } from 'astro:actions';
 
 function initContactForm() {
-    const form = document.getElementById('contact-form') as HTMLFormElement | null;
-    if (!form) return; // not on the contact page
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (!form) return;
 
-    const successEl = document.getElementById('form-success')!;
-    const nameError = document.getElementById('name-error')!;
-    const emailError = document.getElementById('email-error')!;
+  const successEl = document.getElementById('form-success');
+  const nameError = document.getElementById('name-error');
+  const emailError = document.getElementById('email-error');
+  const errorEl = document.getElementById('form-error');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const submitBtnText = submitBtn?.querySelector('span');
 
-    function clearErrors() {
-        nameError.textContent = '';
-        emailError.textContent = '';
-        form!.querySelectorAll('.fg--error').forEach((el) => el.classList.remove('fg--error'));
-    }
+  if (!successEl || !nameError || !emailError || !errorEl || !submitBtn || !submitBtnText) return;
 
-    function showFieldError(fieldId: string, errorEl: HTMLElement, message: string) {
-        errorEl.textContent = message;
-        const input = document.getElementById(fieldId);
-        input?.closest('.fg')?.classList.add('fg--error');
-    }
-
-    // --- Submit handler ---
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        clearErrors();
-
-        const formData = new FormData(form);
-
-        const raw = {
-            name: (formData.get('name') as string) || '',
-            email: (formData.get('email') as string) || '',
-            company: (formData.get('company') as string) || '',
-            message: (formData.get('message') as string) || '',
-            interests: formData.getAll('interest') as string[],
-            budget: (formData.get('budget') as string) || '',
-            website: (formData.get('website') as string) || '',
-        };
-
-        // Client-side validation
-        const result = ContactSchema.safeParse(raw);
-
-        if (!result.success) {
-            const errors = result.error.flatten().fieldErrors;
-            if (errors.website) return; // silent bot reject
-            if (errors.name) showFieldError('name', nameError, errors.name[0]);
-            if (errors.email) showFieldError('email', emailError, errors.email[0]);
-            return;
-        }
-
-        const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-        const errorEl = document.getElementById('form-error')!;
-
-        // Loading state
-        submitBtn.disabled = true;
-        submitBtn.querySelector('span')!.textContent = 'Sending…';
-        errorEl.hidden = true;
-
-        try {
-            const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(result.data),
-            });
-
-            if (res.ok) {
-                form.hidden = true;
-                successEl.hidden = false;
-            } else {
-                throw new Error('Submission failed');
-            }
-        } catch {
-            errorEl.hidden = false;
-            submitBtn.disabled = false;
-            submitBtn.querySelector('span')!.textContent = 'Send it over';
-        }
+  function clearErrors() {
+    if (nameError) nameError.textContent = '';
+    if (emailError) emailError.textContent = '';
+    form?.querySelectorAll('.fg--error').forEach((el) => {
+      el.classList.remove('fg--error');
     });
+    if (errorEl) errorEl.hidden = true;
+  }
+
+  function showFieldError(fieldId: string, errorElement: HTMLElement | null, message: string) {
+    if (errorElement) errorElement.textContent = message;
+    const input = document.getElementById(fieldId);
+    input?.closest('.fg')?.classList.add('fg--error');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const formData = new FormData(form);
+
+    // Loading state
+    submitBtn.disabled = true;
+    submitBtnText.textContent = 'Sending…';
+
+    const { data, error } = await actions.contact.submit(formData);
+
+    if (!error && data?.success) {
+      form.hidden = true;
+      successEl.hidden = false;
+    } else {
+      submitBtn.disabled = false;
+      submitBtnText.textContent = 'Send it over';
+
+      if (error) {
+        if (error.code === 'BAD_REQUEST' && error.fields) {
+          if (error.fields.name) showFieldError('name', nameError, error.fields.name[0]);
+          if (error.fields.email) showFieldError('email', emailError, error.fields.email[0]);
+        } else {
+          errorEl.hidden = false;
+        }
+      } else {
+        errorEl.hidden = false;
+      }
+    }
+  });
 }
 
-// Initialize on page load (works with View Transitions)
 document.addEventListener('astro:page-load', initContactForm);

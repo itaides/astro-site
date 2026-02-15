@@ -1,15 +1,19 @@
 {
   "name": "astro-site",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "astro dev",
     "dev:pages": "astro build && wrangler pages dev dist --port 4324",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "biome check .",
+    "lint": "biome lint .",
+    "format": "biome format . --write"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@dotlottie/player-component": "^2.7.12",
     "astro": "^5.17.2",
     "browserslist": "^4.28.1",
@@ -17,6 +21,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.3.15",
     "@cloudflare/workers-types": "^4.20260214.0",
     "wrangler": "^4.65.0"
   }
