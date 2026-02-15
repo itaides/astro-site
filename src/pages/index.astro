@@ -34,9 +34,9 @@ const projects = [
 const services = [
   {
     num: '01',
-    title: 'SaaS & Web Applications',
-    tags: ['React', 'Next.js', 'TypeScript', 'Cloudflare Workers', 'PostgreSQL'],
-    desc: 'Complete SaaS products from architecture to deployment — React and TypeScript frontend, Hono backends on Cloudflare Workers, PostgreSQL with Drizzle ORM.',
+    title: 'Distributed Systems & SaaS Architecture',
+    tags: ['Golang', 'Node.js', 'Hono', 'TypeScript', 'AWS'],
+    desc: 'High-throughput, fault-tolerant architectures. I build scalable backends using Golang for core services and Node.js/Hono for edge performance, deployed on AWS and Cloudflare.',
   },
   {
     num: '02',
@@ -60,15 +60,13 @@ const services = [
 
 const techStack = [
   { label: 'Frontend', items: 'React · Next.js · Vue · Astro · TypeScript' },
-  { label: 'Backend', items: 'Node.js · Hono · Python · GraphQL' },
-  { label: 'Cloud', items: 'Cloudflare Workers · R2 · Edge Deploy' },
+  { label: 'Backend', items: 'Golang · Node.js · Hono · Python' },
+  { label: 'Cloud', items: 'AWS · S3 · Cloudflare · Docker · CI/CD' },
   { label: 'AI', items: 'AWS Rekognition · LangChain · Vector DBs' },
 ];
 ---
 
-<BaseLayout
-	title="Itai Ben Zeev — Senior Fullstack Developer | Arctica Digital"
->
+<BaseLayout title="Itai Ben Zeev — Fullstack Developer | Arctica Digital">
 	<Header slot="header" />
 
 	<script>
@@ -135,15 +133,15 @@ const techStack = [
 				<div class="about-left reveal-up">
 					<span class="section-number">01 — About</span>
 					<h2 class="about-heading">
-						Staff-level expertise, <em
+						System-level expertise, <em
 							>from architecture to deployment.</em
 						>
 					</h2>
 				</div>
 				<div class="about-right reveal-up">
 					<p>
-						You work directly with me — a senior fullstack developer
-						with 7+ years of experience, currently building
+						You work directly with me — a fullstack developer with
+						8+ years of experience, currently building
 						enterprise-grade systems at Riskified. I bring CI/CD
 						pipelines, scalable architecture, and production-level
 						code quality to every client project.
@@ -222,14 +220,12 @@ const techStack = [
 						<p class="featured-desc">
 							I architected and shipped my own SaaS platform — AI
 							facial recognition, real-time guest experiences, and
-							modular monolith architecture on Cloudflare Workers.
+							microservices architecture on AWS and Cloudflare.
 						</p>
 						<div class="featured-tech">
-							<span>React</span><span>TypeScript</span><span
+							<span>Golang</span><span>Node.js</span><span
 								>Hono</span
-							><span>Cloudflare Workers</span><span
-								>AWS Rekognition</span
-							>
+							><span>AWS S3</span><span>AWS Rekognition</span>
 						</div>
 					</div>
 					<div class="featured-stats">
