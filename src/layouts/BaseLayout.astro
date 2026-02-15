@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import '../styles/main.css';
 
 interface Props {
   title: string;
@@ -108,7 +109,9 @@ const {
 									cursor?.classList.add("cursor-dot--hover"),
 								);
 								el.addEventListener("mouseleave", () =>
-									cursor?.classList.remove("cursor-dot--hover"),
+									cursor?.classList.remove(
+										"cursor-dot--hover",
+									),
 								);
 							});
 					};
@@ -164,7 +167,3 @@ const {
 		</script>
 	</body>
 </html>
-
-<style is:global>
-	@import "../styles/main.css";
-</style>
