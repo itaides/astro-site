@@ -4,11 +4,12 @@ Personal website for [Arctica Digital](https://arctica.digital) — solo web dev
 
 ## Tech Stack
 
-- **[Astro](https://astro.build)** — Static site generator
+- **[Astro](https://astro.build)** — Static site generator (v5, Output: Static + Server Actions)
 - **[Lightning CSS](https://lightningcss.dev)** — CSS transformer & minifier
-- **[Zod](https://zod.dev)** — Form validation (client + server)
-- **[Bun](https://bun.sh)** — Package manager & runtime
-- **[Cloudflare Pages](https://pages.cloudflare.com)** — Hosting & deployment
+- **[Zod](https://zod.dev)** — Type-safe schema validation
+- **[Astro Actions](https://docs.astro.build/en/guides/actions/)** — Type-safe backend logic
+- **[Cloudflare Pages](https://pages.cloudflare.com)** — Hosting & Serverless Functions
+- **[Bun](https://bun.sh)** — Package manager
 
 ## Getting Started
 
@@ -16,8 +17,12 @@ Personal website for [Arctica Digital](https://arctica.digital) — solo web dev
 # Install dependencies
 bun install
 
-# Start dev server
+# Start local dev server (Standard)
 bun run dev
+
+# Start local dev server (With Cloudflare Bindings)
+# Use this to test Contact Form email sending locally
+bun run dev:pages
 
 # Production build
 bun run build
@@ -30,30 +35,32 @@ bun run preview
 
 ```
 ├── docs/               # PRD, design system, site vision
-├── functions/api/      # Cloudflare Pages Functions (contact form)
-├── public/images/      # Static assets
 ├── src/
-│   ├── components/     # Header, Footer
+│   ├── actions/        # Backend logic (contact form submission)
+│   ├── components/     # Header, Footer, UI components
 │   ├── content/blog/   # Blog posts (Markdown)
 │   ├── layouts/        # Base layout
 │   ├── pages/          # Routes (Home, About, Works, Contact, Insights)
-│   ├── scripts/        # Client-side TypeScript
+│   ├── scripts/        # Client-side TypeScript (View Transitions compatible)
 │   └── styles/         # BEM CSS (base, components, pages)
-├── astro.config.mjs    # Astro + Lightning CSS config
-└── wrangler.jsonc      # Cloudflare Pages config
+├── astro.config.mjs    # Astro (Cloudflare Adapter) + Lightning CSS config
+├── wrangler.jsonc      # Cloudflare Pages config & bindings
+└── package.json
 ```
 
 ## Deployment
 
-The site is deployed to **Cloudflare Pages** with automatic builds on push to `main`.
+The site is deployed to **Cloudflare Pages** via Git integration.
 
-### Setup
+### Configuration
 
-1. Connect the repo in [Cloudflare Pages Dashboard](https://dash.cloudflare.com)
-2. Set build command: `bun run build`
-3. Set output directory: `dist`
-4. Enable **Email Routing** for the contact form (`hello@arctica.digital`)
+- **Build Command**: `bun run build`
+- **Output Directory**: `dist`
+- **Compatibility Flags**: `nodejs_compat` (Required for build artifact compatibility)
 
 ### Contact Form
 
-The contact form uses a **Cloudflare Pages Function** (`functions/api/contact.ts`) with the `send_email` binding for server-side email delivery. No third-party APIs or exposed keys.
+The contact form is powered by **Astro Actions** (`src/actions/index.ts`).
+- **Validation**: Server-side Zod validation.
+- **Email**: Uses Cloudflare `send_email` binding (Email Routing) to deliver messages without third-party APIs.
+- **Spam Protection**: Honeypot field (`website`) + server-side verification.
