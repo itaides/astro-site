@@ -2,14 +2,15 @@
 /// <reference types="astro/client" />
 /// <reference types="@cloudflare/workers-types" />
 
-type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
+type Runtime = import('@astrojs/cloudflare').Runtime<Env>;
 
 declare namespace App {
-    interface Locals extends Runtime { }
+  interface Locals extends Runtime {}
 }
 
 interface Env {
-    SEND_EMAIL: {
-        send: (message: any) => Promise<void>;
-    };
+  SEND_EMAIL: {
+    // biome-ignore lint/suspicious/noExplicitAny: EmailMessage type is global in worker scope
+    send: (message: any) => Promise<void>;
+  };
 }

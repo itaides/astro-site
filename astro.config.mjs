@@ -1,8 +1,9 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from 'astro/config';
+
 import cloudflare from '@astrojs/cloudflare';
-import { browserslistToTargets } from 'lightningcss';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import browserslist from 'browserslist';
+import { browserslistToTargets } from 'lightningcss';
 
 // https://astro.build/config
 export default defineConfig({

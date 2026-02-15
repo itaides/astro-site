@@ -8,6 +8,7 @@ Personal website for [Arctica Digital](https://arctica.digital) — solo web dev
 - **[Lightning CSS](https://lightningcss.dev)** — CSS transformer & minifier
 - **[Zod](https://zod.dev)** — Type-safe schema validation
 - **[Astro Actions](https://docs.astro.build/en/guides/actions/)** — Type-safe backend logic
+- **[Biome](https://biomejs.dev)** — High-performance toolchain (Format/Lint)
 - **[Cloudflare Pages](https://pages.cloudflare.com)** — Hosting & Serverless Functions
 - **[Bun](https://bun.sh)** — Package manager
 

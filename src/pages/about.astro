@@ -1,52 +1,52 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const capabilities = [
-	{
-		num: "01",
-		title: "SaaS & Web Applications",
-		desc: "Complete product development — React, TypeScript, Cloudflare Workers, PostgreSQL.",
-	},
-	{
-		num: "02",
-		title: "AI & ML Integration",
-		desc: "Facial recognition, LLMs, vector databases — production AI in web applications.",
-	},
-	{
-		num: "03",
-		title: "WordPress & E-Commerce",
-		desc: "Custom themes with Sage/Roots, ACF, WooCommerce, and headless setups.",
-	},
-	{
-		num: "04",
-		title: "Ongoing Partnership",
-		desc: "CI/CD pipelines, Core Web Vitals, infrastructure, monitoring — direct access.",
-	},
+  {
+    num: '01',
+    title: 'SaaS & Web Applications',
+    desc: 'Complete product development — React, TypeScript, Cloudflare Workers, PostgreSQL.',
+  },
+  {
+    num: '02',
+    title: 'AI & ML Integration',
+    desc: 'Facial recognition, LLMs, vector databases — production AI in web applications.',
+  },
+  {
+    num: '03',
+    title: 'WordPress & E-Commerce',
+    desc: 'Custom themes with Sage/Roots, ACF, WooCommerce, and headless setups.',
+  },
+  {
+    num: '04',
+    title: 'Ongoing Partnership',
+    desc: 'CI/CD pipelines, Core Web Vitals, infrastructure, monitoring — direct access.',
+  },
 ];
 
 /* Miller's Law: top 4 per category */
 const techExpertise = {
-	frontend: ["React", "Next.js", "TypeScript", "Astro"],
-	backend: ["Node.js", "Hono", "PostgreSQL", "Drizzle ORM"],
-	cloud: ["Cloudflare Workers", "Edge Deploy", "CI/CD", "Turborepo"],
-	ai: ["AWS Rekognition", "LangChain", "Vector DBs", "LLM Integration"],
+  frontend: ['React', 'Next.js', 'TypeScript', 'Astro'],
+  backend: ['Node.js', 'Hono', 'PostgreSQL', 'Drizzle ORM'],
+  cloud: ['Cloudflare Workers', 'Edge Deploy', 'CI/CD', 'Turborepo'],
+  ai: ['AWS Rekognition', 'LangChain', 'Vector DBs', 'LLM Integration'],
 };
 
 const concerns = [
-	{
-		q: '"What if you\'re too busy?"',
-		a: "I take on a limited number of projects to ensure every client gets my full attention. Selectivity means you're never competing for my time with 20 other projects.",
-	},
-	{
-		q: '"Can one person handle complex projects?"',
-		a: "I've built complete SaaS platforms with AI integration and enterprise web applications. At Riskified, I work on systems handling millions of transactions — complexity is my daily work.",
-	},
-	{
-		q: '"Aren\'t you slower than an agency?"',
-		a: "Typically faster. No bureaucracy, no approval chains. One senior engineer with full codebase ownership and CI/CD automation moves faster than a distributed team with coordination overhead.",
-	},
+  {
+    q: '"What if you\'re too busy?"',
+    a: "I take on a limited number of projects to ensure every client gets my full attention. Selectivity means you're never competing for my time with 20 other projects.",
+  },
+  {
+    q: '"Can one person handle complex projects?"',
+    a: "I've built complete SaaS platforms with AI integration and enterprise web applications. At Riskified, I work on systems handling millions of transactions — complexity is my daily work.",
+  },
+  {
+    q: '"Aren\'t you slower than an agency?"',
+    a: 'Typically faster. No bureaucracy, no approval chains. One senior engineer with full codebase ownership and CI/CD automation moves faster than a distributed team with coordination overhead.',
+  },
 ];
 ---
 

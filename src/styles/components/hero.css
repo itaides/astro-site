@@ -1,42 +1,42 @@
 /* --- Hero Component --- */
 .hero-line {
-    display: block;
-    opacity: 0;
-    animation: hero-reveal 1.2s var(--ease-out) forwards;
+  display: block;
+  opacity: 0;
+  animation: hero-reveal 1.2s var(--ease-out) forwards;
 }
 
 .hero-line:nth-child(1) {
-    animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 
 .hero-line:nth-child(2) {
-    animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 
 .hero-line:nth-child(3) {
-    animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 
 .hero-line:nth-child(4) {
-    animation-delay: 0.8s;
+  animation-delay: 0.8s;
 }
 
 .hero-mascot {
-    animation: mascot-reveal 0.8s var(--ease-out) forwards;
-    animation-delay: 1s;
-    opacity: 0;
-    display: inline-block;
-    vertical-align: middle;
-    width: clamp(60px, 18vw, 320px);
-    height: auto;
-    margin: 0 0.1em;
-    border-radius: 50%;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    cursor: pointer;
-    position: relative;
-    top: -0.05em;
+  animation: mascot-reveal 0.8s var(--ease-out) forwards;
+  animation-delay: 1s;
+  opacity: 0;
+  display: inline-block;
+  vertical-align: middle;
+  width: clamp(60px, 18vw, 320px);
+  height: auto;
+  margin: 0 0.1em;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  position: relative;
+  top: -0.05em;
 }
 
 .hero-mascot:hover {
-    transform: scale(1.1) rotate(-8deg);
+  transform: scale(1.1) rotate(-8deg);
 }
