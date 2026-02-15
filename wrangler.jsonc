@@ -1,14 +1,10 @@
 {
-  "name": "astro-site",
+  "name": "arctica-digital-web",
   "compatibility_date": "2026-02-15",
-  "compatibility_flags": ["nodejs_compat"],
-  "pages_build_output_dir": "dist",
-  "send_email": [
-    {
-      "name": "SEND_EMAIL",
-      "destination_address": "hello@arctica.digital"
-    }
+  "compatibility_flags": [
+    "nodejs_compat"
   ],
+  "pages_build_output_dir": "dist",
   "observability": {
     "enabled": true
   }
