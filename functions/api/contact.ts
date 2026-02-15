@@ -1,3 +1,4 @@
+/// <reference types="@cloudflare/workers-types" />
 import { z } from 'zod';
 
 // --- Sanitization: strip ALL HTML tags ---
@@ -49,7 +50,7 @@ interface Env {
     };
 }
 
-// @ts-expect-error — EmailMessage is a Cloudflare Workers global
+// @ts-expect-error — EmailMessage is a Cloudflare Workers runtime global
 class EmailMessageWrapper {
     constructor(
         public from: string,
@@ -87,13 +88,28 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         const rawEmail = composeMime(data);
 
         // Send via Cloudflare Email Routing
-        const message = new EmailMessage(
-            'contact-form@arctica.digital',
-            'hello@arctica.digital',
-            new Response(rawEmail).body!,
-        );
-
-        await context.env.SEND_EMAIL.send(message);
+        if (context.env.SEND_EMAIL) {
+            // Use the runtime EmailMessage global
+            const EmailMsg = (globalThis as any).EmailMessage;
+            if (EmailMsg) {
+                const msg = new EmailMsg(
+                    'contact-form@arctica.digital',
+                    'hello@arctica.digital',
+                    rawEmail,
+                );
+                await context.env.SEND_EMAIL.send(msg);
+            } else {
+                // Local dev — EmailMessage class not available
+                console.log('─── DEV MODE: Email would be sent ───');
+                console.log(rawEmail);
+                console.log('─── END ───');
+            }
+        } else {
+            // No binding at all
+            console.log('─── DEV MODE: No SEND_EMAIL binding ───');
+            console.log(rawEmail);
+            console.log('─── END ───');
+        }
 
         return new Response(
             JSON.stringify({ success: true }),
