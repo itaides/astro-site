@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import Agent from '../components/Agent.astro';
 import '../styles/main.css';
 
 interface Props {
@@ -47,6 +48,7 @@ const {
 			<slot />
 		</main>
 		<slot name="footer" />
+		<Agent />
 
 		<script>
 			// ====== CSS Reveal System ======

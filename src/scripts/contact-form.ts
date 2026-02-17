@@ -1,4 +1,4 @@
-import { actions } from 'astro:actions';
+import { actions, isInputError } from 'astro:actions';
 
 function initContactForm() {
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
@@ -47,13 +47,9 @@ function initContactForm() {
       submitBtn.disabled = false;
       submitBtnText.textContent = 'Send it over';
 
-      if (error) {
-        if (error.code === 'BAD_REQUEST' && error.fields) {
-          if (error.fields.name) showFieldError('name', nameError, error.fields.name[0]);
-          if (error.fields.email) showFieldError('email', emailError, error.fields.email[0]);
-        } else {
-          errorEl.hidden = false;
-        }
+      if (isInputError(error)) {
+        if (error.fields.name) showFieldError('name', nameError, error.fields.name[0]);
+        if (error.fields.email) showFieldError('email', emailError, error.fields.email[0]);
       } else {
         errorEl.hidden = false;
       }

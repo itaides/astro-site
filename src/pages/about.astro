@@ -1,58 +1,21 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import { capabilities, concerns, techExpertise } from '../data/info';
+import { profile, stats } from '../data/profile';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const capabilities = [
-  {
-    num: '01',
-    title: 'SaaS & Web Applications',
-    desc: 'Complete product development — React, TypeScript, Cloudflare Workers, PostgreSQL.',
-  },
-  {
-    num: '02',
-    title: 'AI & ML Integration',
-    desc: 'Facial recognition, LLMs, vector databases — production AI in web applications.',
-  },
-  {
-    num: '03',
-    title: 'WordPress & E-Commerce',
-    desc: 'Custom themes with Sage/Roots, ACF, WooCommerce, and headless setups.',
-  },
-  {
-    num: '04',
-    title: 'Ongoing Partnership',
-    desc: 'CI/CD pipelines, Core Web Vitals, infrastructure, monitoring — direct access.',
-  },
-];
-
-/* Miller's Law: top 4 per category */
-const techExpertise = {
-  frontend: ['React', 'Next.js', 'TypeScript', 'Astro'],
-  backend: ['Node.js', 'Hono', 'PostgreSQL', 'Drizzle ORM'],
-  cloud: ['Cloudflare Workers', 'Edge Deploy', 'CI/CD', 'Turborepo'],
-  ai: ['AWS Rekognition', 'LangChain', 'Vector DBs', 'LLM Integration'],
-};
-
-const concerns = [
-  {
-    q: '"What if you\'re too busy?"',
-    a: "I take on a limited number of projects to ensure every client gets my full attention. Selectivity means you're never competing for my time with 20 other projects.",
-  },
-  {
-    q: '"Can one person handle complex projects?"',
-    a: "I've built complete SaaS platforms with AI integration and enterprise web applications. At Riskified, I work on systems handling millions of transactions — complexity is my daily work.",
-  },
-  {
-    q: '"Aren\'t you slower than an agency?"',
-    a: 'Typically faster. No bureaucracy, no approval chains. One senior engineer with full codebase ownership and CI/CD automation moves faster than a distributed team with coordination overhead.',
-  },
-];
+const techCategories = [
+  { key: 'frontend', label: 'Frontend' },
+  { key: 'backend', label: 'Backend' },
+  { key: 'cloud', label: 'Cloud & DevOps' },
+  { key: 'ai', label: 'AI & Emerging' },
+] as const;
 ---
 
 <BaseLayout
-	title="About Itai — Arctica Digital"
-	description="Senior fullstack developer delivering agency-quality work with direct access. React, Next.js, WordPress, AI integration expert."
+	title={`About ${profile.name} — ${profile.brand}`}
+	description={`${profile.title} delivering agency-quality work with direct access. ${capabilities.map(c => c.title).join(', ')}.`}
 >
 	<Header slot="header" />
 
@@ -60,7 +23,7 @@ const concerns = [
 		<div class="container">
 			<span class="section-label reveal-up">About</span>
 			<h1 class="about-title">
-				<span class="hero-line">Senior developer.</span>
+				<span class="hero-line">Fullstack developer.</span>
 				<span class="hero-line"
 					><span class="text-outline">Modern stack.</span></span
 				>
@@ -78,38 +41,25 @@ const concerns = [
 				<div class="intro-left reveal-up">
 					<span class="section-number">01 — Who I Am</span>
 					<h2 class="intro-heading">
-						I'm Itai Ben Zeev — a senior fullstack developer who
-						architects and ships everything from AI-powered SaaS
-						platforms to <em>high-performance WordPress sites.</em>
+						{profile.aboutIntro.split('high-performance')[0]}<em
+							>high-performance{profile.aboutIntro.split('high-performance')[1]}</em
+						>
 					</h2>
 				</div>
 				<div class="intro-right reveal-up">
-					<p>
-						Arctica Digital is my professional brand for client
-						work. When you hire me, you work with me — directly.
-						From architecture decisions to final deploy, there's one
-						senior engineer owning the entire stack.
-					</p>
+					<p>{profile.aboutBody[0]}</p>
 
 					<!-- Aesthetic-Usability: pull quote breaks wall of text -->
 					<blockquote class="pull-quote">
-						I bring CI/CD pipelines, scalable architecture, and
-						production-level code quality — the same standards I
-						apply at Riskified.
+						{profile.aboutBody[1]}
 					</blockquote>
 
 					<p>
 						I also build my own products. <strong>Eventimio</strong> is
 						my AI-powered event management SaaS — facial recognition,
-						real-time features, CI/CD with Turborepo, and cloud-native
-						architecture on Cloudflare Workers.
+						real-time features, and scalable architecture on AWS.
 					</p>
-					<p>
-						I founded Arctica Digital to bring staff-level
-						engineering to client work — the same architecture
-						patterns, CI/CD pipelines, and code quality standards I
-						use at Riskified, applied to projects of all sizes.
-					</p>
+					<p>{profile.aboutBody[3]}</p>
 				</div>
 			</div>
 		</div>
@@ -119,26 +69,12 @@ const concerns = [
 	<section class="stats-strip">
 		<div class="container">
 			<div class="stats-grid reveal-stagger">
-				<div class="stat-card">
-					<span class="stat-value gradient-text">7+</span><span
-						class="stat-label">Years Experience</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">50+</span><span
-						class="stat-label">Projects Shipped</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">Staff</span><span
-						class="stat-label">Level Engineering</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">Direct</span><span
-						class="stat-label">Access Always</span
-					>
-				</div>
+				{stats.map((s) => (
+					<div class="stat-card">
+						<span class="stat-value gradient-text">{s.value}</span>
+						<span class="stat-label">{s.label}</span>
+					</div>
+				))}
 			</div>
 		</div>
 	</section>
@@ -171,59 +107,23 @@ const concerns = [
 		<div class="container">
 			<span class="section-number reveal-up">03 — Tech Stack</span>
 			<h2 class="tech-heading reveal-up">
-				Modern tools. <span style="color:rgba(255,255,255,0.3);"
+				Modern tools. <span style="color:rgba(255,255,255,0.6);"
 					>Production-proven.</span
 				>
 			</h2>
 			<div class="tech-expertise-grid reveal-stagger">
-				<div class="tech-col">
-					<h3 class="tech-col-title">
-						<span class="tech-col-icon">◆</span> Frontend
-					</h3>
-					<div class="tech-col-tags">
-						{
-							techExpertise.frontend.map((t) => (
+				{techCategories.map(({ key, label }) => (
+					<div class="tech-col">
+						<h3 class="tech-col-title">
+							<span class="tech-col-icon">◆</span> {label}
+						</h3>
+						<div class="tech-col-tags">
+							{techExpertise[key].map((t) => (
 								<span class="tech-pill">{t}</span>
-							))
-						}
+							))}
+						</div>
 					</div>
-				</div>
-				<div class="tech-col">
-					<h3 class="tech-col-title">
-						<span class="tech-col-icon">◆</span> Backend
-					</h3>
-					<div class="tech-col-tags">
-						{
-							techExpertise.backend.map((t) => (
-								<span class="tech-pill">{t}</span>
-							))
-						}
-					</div>
-				</div>
-				<div class="tech-col">
-					<h3 class="tech-col-title">
-						<span class="tech-col-icon">◆</span> Cloud & DevOps
-					</h3>
-					<div class="tech-col-tags">
-						{
-							techExpertise.cloud.map((t) => (
-								<span class="tech-pill">{t}</span>
-							))
-						}
-					</div>
-				</div>
-				<div class="tech-col">
-					<h3 class="tech-col-title">
-						<span class="tech-col-icon">◆</span> AI & Emerging
-					</h3>
-					<div class="tech-col-tags">
-						{
-							techExpertise.ai.map((t) => (
-								<span class="tech-pill">{t}</span>
-							))
-						}
-					</div>
-				</div>
+				))}
 			</div>
 		</div>
 	</section>
@@ -253,15 +153,14 @@ const concerns = [
 		<div class="container">
 			<div class="philosophy-card reveal-up">
 				<span class="section-number">05 — My Approach</span>
-				<h2 class="philosophy-quote">
-					Every project I take carries my name. <span
-						class="text-outline"
-						>That's the best quality guarantee I can offer.</span
-					>
-				</h2>
+				<h2 class="philosophy-quote" set:html={
+					profile.philosophyQuote.replace(
+						"That's the best quality guarantee I can offer.",
+						`<span class="text-outline">That's the best quality guarantee I can offer.</span>`
+					)
+				} />
 				<p class="philosophy-desc">
-					Technical excellence without over-engineering. DRY code,
-					clean architecture, and systems built to scale.
+					{profile.philosophySubtext}
 				</p>
 				<a href="/contact" class="btn btn--primary philosophy-btn">
 					<span>Let's talk about your project</span>

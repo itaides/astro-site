@@ -14,11 +14,13 @@
     "format": "biome format . --write"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/cloudflare": "^12.6.12",
     "@dotlottie/player-component": "^2.7.12",
     "astro": "^5.17.2",
     "browserslist": "^4.28.1",
     "lightningcss": "^1.31.1",
+    "typescript": "^5.9.3",
     "zod": "^4.3.6"
   },
   "devDependencies": {
