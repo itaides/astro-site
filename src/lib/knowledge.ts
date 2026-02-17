@@ -25,7 +25,7 @@ export async function getWebsiteContext(): Promise<KnowledgeItem[]> {
         title: post.data.title,
         excerpt: post.data.excerpt,
         content: post.body,
-        url: `/blog/${post.id}`,
+        url: `/insights/${post.id}`,
         tags: post.data.tag ? [post.data.tag] : [],
       });
     }
