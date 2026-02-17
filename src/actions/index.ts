@@ -1,5 +1,5 @@
 import { defineAction } from 'astro:actions';
-import { z } from 'zod';
+import { z } from 'astro:schema';
 
 // --- Sanitization: strip ALL HTML tags ---
 function sanitize(str: string): string {
@@ -46,7 +46,7 @@ function composeMime(data: z.infer<typeof ContactSchema>): string {
 export const server = {
   contact: {
     submit: defineAction({
-      accept: 'json',
+      accept: 'form',
       input: ContactSchema,
       handler: async (input, context) => {
         // Honeypot check

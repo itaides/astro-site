@@ -19,6 +19,7 @@ interface ListItem {
 }
 
 interface GenComponent {
+  [key: string]: unknown;
   type?: string;
   name: string;
   props?: {
@@ -45,7 +46,8 @@ class AgentChat extends HTMLElement {
   messages: ChatMessage[];
   isLoading: boolean;
   isMuted: boolean;
-  recognition: SpeechRecognition | null;
+  // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognition is a browser API
+  recognition: any;
   conversations: Conversation[];
   activeConversationId: string | null;
   currentView: 'chat' | 'history';
@@ -562,7 +564,7 @@ class AgentChat extends HTMLElement {
     }
   }
 
-  extractComponent(content: string): { text: string; component: Record<string, unknown> | null } {
+  extractComponent(content: string): { text: string; component: GenComponent | null } {
     const potentialStarts = [];
     for (let i = 0; i < content.length; i++) {
       if (content[i] === '{') potentialStarts.push(i);
@@ -1074,7 +1076,7 @@ class AgentChat extends HTMLElement {
       }
     };
 
-    this.recognition.onend = () => {};
+    this.recognition.onend = () => { };
 
     // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognitionEvent type is not standard
     this.recognition.onresult = (event: any) => {
