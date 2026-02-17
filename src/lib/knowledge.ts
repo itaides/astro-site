@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
+import { concerns, services, techExpertise } from '../data/info';
+import { careerTimeline, contact, milestones, profile, stats } from '../data/profile';
 import { featured, projects } from '../data/projects';
-import { services, techExpertise, concerns } from '../data/info';
-import { profile, contact, careerTimeline, milestones, stats } from '../data/profile';
 
 export interface KnowledgeItem {
   type: 'blog' | 'page' | 'project';

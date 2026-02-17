@@ -1,11 +1,11 @@
 ---
+import Agent from '../components/Agent.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import Agent from '../components/Agent.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { projects as allProjects } from '../data/projects';
 import { services, techStack } from '../data/info';
-import { profile, clients, testimonials } from '../data/profile';
+import { clients, profile, testimonials } from '../data/profile';
+import { projects as allProjects } from '../data/projects';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const projects = allProjects.map((p) => ({
   title: p.title,

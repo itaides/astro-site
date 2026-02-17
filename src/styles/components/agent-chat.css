@@ -409,6 +409,7 @@ agent-chat {
 }
 
 .agent-history-delete:hover {
+  /* biome-ignore lint/complexity/noImportantStyles: override inherited color on hover */
   color: #ef4444 !important;
 }
 
@@ -868,14 +869,18 @@ agent-chat {
 }
 
 .agent-hangup-btn {
+  /* biome-ignore lint/complexity/noImportantStyles: override base button styles for hangup state */
   background: #fee2e2 !important;
+  /* biome-ignore lint/complexity/noImportantStyles: override base button styles for hangup state */
   color: #ef4444 !important;
+  /* biome-ignore lint/complexity/noImportantStyles: override base button styles for hangup state */
   border-radius: 50% !important;
   width: 30px;
   height: 30px;
 }
 
 .agent-hangup-btn:hover {
+  /* biome-ignore lint/complexity/noImportantStyles: override base button hover for hangup state */
   background: #fecaca !important;
   transform: scale(1.05);
 }
@@ -916,5 +921,6 @@ agent-chat {
 
 /* --- Utilities --- */
 .agent-hidden {
+  /* biome-ignore lint/complexity/noImportantStyles: utility class must override any display value */
   display: none !important;
 }

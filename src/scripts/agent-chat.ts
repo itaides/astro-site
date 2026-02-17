@@ -1,10 +1,52 @@
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content?: string;
+  component?: GenComponent;
+}
+
+interface Conversation {
+  id: string;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+  messages: ChatMessage[];
+}
+
+interface ListItem {
+  icon?: string;
+  title?: string;
+  description?: string;
+}
+
+interface GenComponent {
+  type?: string;
+  name: string;
+  props?: {
+    direction?: string;
+    gap?: string;
+    children?: GenComponent[];
+    title?: string;
+    value?: string;
+    label?: string;
+    description?: string;
+    items?: ListItem[];
+    headers?: string[];
+    rows?: string[][];
+    action?: string;
+    type?: string;
+    tech?: string[];
+    code?: string;
+    location?: string;
+  };
+}
+
 class AgentChat extends HTMLElement {
   isOpen: boolean;
-  messages: any[];
+  messages: ChatMessage[];
   isLoading: boolean;
   isMuted: boolean;
-  recognition: any;
-  conversations: any[];
+  recognition: SpeechRecognition | null;
+  conversations: Conversation[];
   activeConversationId: string | null;
   currentView: 'chat' | 'history';
 
@@ -25,7 +67,7 @@ class AgentChat extends HTMLElement {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 8);
   }
 
-  getWelcomeMessage(): any {
+  getWelcomeMessage(): ChatMessage {
     return {
       role: 'assistant',
       content: "Hi! I'm Itai's AI assistant. Ask me about his projects, experience, or skills.",
@@ -91,18 +133,18 @@ class AgentChat extends HTMLElement {
     this.saveState();
   }
 
-  extractTitle(messages: any[]): string {
-    const firstUser = messages.find((m: any) => m.role === 'user');
-    if (firstUser && firstUser.content) {
+  extractTitle(messages: ChatMessage[]): string {
+    const firstUser = messages.find((m: ChatMessage) => m.role === 'user');
+    if (firstUser?.content) {
       const text = firstUser.content.trim();
-      return text.length > 40 ? text.substring(0, 40) + '...' : text;
+      return text.length > 40 ? `${text.substring(0, 40)}...` : text;
     }
     return 'New conversation';
   }
 
   saveState() {
     if (this.activeConversationId) {
-      const conv = this.conversations.find((c: any) => c.id === this.activeConversationId);
+      const conv = this.conversations.find((c: Conversation) => c.id === this.activeConversationId);
       if (conv) {
         conv.messages = this.messages;
         conv.updatedAt = Date.now();
@@ -137,7 +179,7 @@ class AgentChat extends HTMLElement {
   }
 
   switchToConversation(id: string) {
-    const conv = this.conversations.find((c: any) => c.id === id);
+    const conv = this.conversations.find((c: Conversation) => c.id === id);
     if (!conv) return;
     this.activeConversationId = id;
     this.messages = conv.messages;
@@ -153,10 +195,12 @@ class AgentChat extends HTMLElement {
   }
 
   deleteConversation(id: string) {
-    this.conversations = this.conversations.filter((c: any) => c.id !== id);
+    this.conversations = this.conversations.filter((c: Conversation) => c.id !== id);
     if (this.activeConversationId === id) {
       if (this.conversations.length) {
-        const sorted = [...this.conversations].sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+        const sorted = [...this.conversations].sort(
+          (a: Conversation, b: Conversation) => b.updatedAt - a.updatedAt,
+        );
         this.activeConversationId = sorted[0].id;
         this.messages = sorted[0].messages;
       } else {
@@ -208,7 +252,9 @@ class AgentChat extends HTMLElement {
     if (!historyEl) return;
     historyEl.textContent = '';
 
-    const sorted = [...this.conversations].sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+    const sorted = [...this.conversations].sort(
+      (a: Conversation, b: Conversation) => b.updatedAt - a.updatedAt,
+    );
 
     if (!sorted.length) {
       const empty = document.createElement('div');
@@ -218,7 +264,7 @@ class AgentChat extends HTMLElement {
       return;
     }
 
-    sorted.forEach((conv: any) => {
+    sorted.forEach((conv: Conversation) => {
       const item = document.createElement('div');
       item.className = 'agent-history-item';
       if (conv.id === this.activeConversationId) {
@@ -235,13 +281,8 @@ class AgentChat extends HTMLElement {
 
       const meta = document.createElement('div');
       meta.className = 'agent-history-meta';
-      const msgCount = conv.messages.filter((m: any) => m.role === 'user').length;
-      meta.textContent =
-        this.formatTimeAgo(conv.updatedAt) +
-        ' \u00B7 ' +
-        msgCount +
-        ' message' +
-        (msgCount !== 1 ? 's' : '');
+      const msgCount = conv.messages.filter((m: ChatMessage) => m.role === 'user').length;
+      meta.textContent = `${this.formatTimeAgo(conv.updatedAt)} \u00B7 ${msgCount} message${msgCount !== 1 ? 's' : ''}`;
 
       info.appendChild(title);
       info.appendChild(meta);
@@ -293,10 +334,10 @@ class AgentChat extends HTMLElement {
     const days = Math.floor(hours / 24);
 
     if (seconds < 60) return 'Just now';
-    if (minutes < 60) return minutes + ' min ago';
-    if (hours < 24) return hours + 'h ago';
+    if (minutes < 60) return `${minutes} min ago`;
+    if (hours < 24) return `${hours}h ago`;
     if (days === 1) return 'Yesterday';
-    if (days < 7) return days + 'd ago';
+    if (days < 7) return `${days}d ago`;
 
     const date = new Date(timestamp);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -424,7 +465,7 @@ class AgentChat extends HTMLElement {
                   const visibleText = assistantMessageContent.substring(0, jsonStartIdx).trim();
 
                   if (visibleText) {
-                    this.updateMessageContent(assistantMsgIndex, visibleText + ' ...');
+                    this.updateMessageContent(assistantMsgIndex, `${visibleText} ...`);
                   } else {
                     this.updateMessageContent(assistantMsgIndex, 'Thinking...');
                   }
@@ -451,7 +492,7 @@ class AgentChat extends HTMLElement {
           this.renderMessageAtIndex(assistantMsgIndex);
         }
         this.saveState();
-      } catch (e) {
+      } catch (_e) {
         // Not valid JSON, keep as text
       }
     } catch (error) {
@@ -476,7 +517,7 @@ class AgentChat extends HTMLElement {
     const messagesContainer = this.querySelector('.agent-messages');
     if (!messagesContainer) return;
 
-    let msgEl;
+    let msgEl: HTMLElement;
     if (append) {
       msgEl = document.createElement('div');
       const msg = this.messages[index];
@@ -521,7 +562,7 @@ class AgentChat extends HTMLElement {
     }
   }
 
-  extractComponent(content: string): { text: string; component: any | null } {
+  extractComponent(content: string): { text: string; component: Record<string, unknown> | null } {
     const potentialStarts = [];
     for (let i = 0; i < content.length; i++) {
       if (content[i] === '{') potentialStarts.push(i);
@@ -553,11 +594,11 @@ class AgentChat extends HTMLElement {
               }
 
               return {
-                text: (textBefore + '\n\n' + textAfter).trim(),
-                component: parsed,
+                text: `${textBefore}\n\n${textAfter}`.trim(),
+                component: parsed as GenComponent,
               };
             }
-          } catch (e) {
+          } catch (_e) {
             // Check next
           }
           break;
@@ -576,7 +617,7 @@ class AgentChat extends HTMLElement {
     try {
       const { text: cleanText } = this.extractComponent(text);
       if (cleanText) spokenText = cleanText;
-    } catch (e) {
+    } catch (_e) {
       /* use original */
     }
 
@@ -653,7 +694,7 @@ class AgentChat extends HTMLElement {
     }
   }
 
-  addMessage(msg: { role: string; content?: string; component?: any }) {
+  addMessage(msg: ChatMessage) {
     this.messages.push(msg);
     const messagesContainer = this.querySelector('.agent-messages');
     if (!messagesContainer) return;
@@ -691,7 +732,7 @@ class AgentChat extends HTMLElement {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
-  renderComponentSafe(container: HTMLElement, component: any): void {
+  renderComponentSafe(container: HTMLElement, component: GenComponent): void {
     if (!component || !component.name) return;
 
     if (component.name === 'Layout') {
@@ -701,7 +742,7 @@ class AgentChat extends HTMLElement {
       const gap = component.props?.gap || 'md';
       layout.style.gap = `var(--space-${gap}, 1rem)`;
       if (Array.isArray(component.props?.children)) {
-        component.props.children.forEach((child: any) => {
+        component.props.children.forEach((child: GenComponent) => {
           this.renderComponentSafe(layout, child);
         });
       }
@@ -743,7 +784,7 @@ class AgentChat extends HTMLElement {
       const list = document.createElement('div');
       list.className = 'gen-list';
       const items = component.props?.items || [];
-      items.forEach((item: any) => {
+      items.forEach((item: ListItem) => {
         const row = document.createElement('div');
         row.className = 'gen-list-item';
         if (item.icon) {
@@ -765,7 +806,7 @@ class AgentChat extends HTMLElement {
         }
         if (item.description) {
           const span = document.createElement('span');
-          span.textContent = (item.title ? ': ' : '') + item.description;
+          span.textContent = `${item.title ? ': ' : ''}${item.description}`;
           content.appendChild(span);
         }
         row.appendChild(content);
@@ -879,7 +920,7 @@ class AgentChat extends HTMLElement {
       card.className = 'gen-card';
       card.style.textAlign = 'center';
       const h4 = document.createElement('h4');
-      h4.textContent = 'Weather in ' + (component.props?.location || '');
+      h4.textContent = `Weather in ${component.props?.location || ''}`;
       card.appendChild(h4);
       const val = document.createElement('div');
       val.className = 'gen-card-value';
@@ -894,7 +935,7 @@ class AgentChat extends HTMLElement {
     }
 
     const unknown = document.createElement('div');
-    unknown.textContent = 'Unknown Component: ' + component.name;
+    unknown.textContent = `Unknown Component: ${component.name}`;
     container.appendChild(unknown);
   }
 
@@ -942,9 +983,12 @@ class AgentChat extends HTMLElement {
 
     this.querySelector('.agent-mute-btn')?.addEventListener('click', () => this.toggleMute());
 
-    this.querySelector('.agent-input')?.addEventListener('keypress', (e: any) => {
-      if (e.key === 'Enter') this.sendMessage();
-    });
+    (this.querySelector('.agent-input') as HTMLElement | null)?.addEventListener(
+      'keypress',
+      (e: Event) => {
+        if ((e as KeyboardEvent).key === 'Enter') this.sendMessage();
+      },
+    );
 
     this.querySelector('.agent-input')?.addEventListener('input', () =>
       this.updateSendButtonState(),
@@ -952,11 +996,11 @@ class AgentChat extends HTMLElement {
 
     const chips = this.querySelectorAll('.agent-suggestion-chip');
     chips.forEach((chip) => {
-      chip.addEventListener('click', (e: any) => {
-        const text = e.target.textContent;
+      (chip as HTMLElement).addEventListener('click', (e: Event) => {
+        const text = (e.target as HTMLElement).textContent;
         const input = this.querySelector('.agent-input') as HTMLInputElement;
         if (input) {
-          input.value = text;
+          input.value = text || '';
           this.sendMessage();
         }
       });
@@ -1015,6 +1059,7 @@ class AgentChat extends HTMLElement {
     }
 
     const SpeechRecognition =
+      // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognition is not in all browsers
       (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     this.recognition = new SpeechRecognition();
     this.recognition.continuous = false;
@@ -1031,6 +1076,7 @@ class AgentChat extends HTMLElement {
 
     this.recognition.onend = () => {};
 
+    // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognitionEvent type is not standard
     this.recognition.onresult = (event: any) => {
       const result = event.results[0];
       const text = result[0].transcript;
@@ -1049,6 +1095,7 @@ class AgentChat extends HTMLElement {
       }
     };
 
+    // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognitionErrorEvent type is not standard
     this.recognition.onerror = (event: any) => {
       console.error('Speech recognition error', event.error);
 

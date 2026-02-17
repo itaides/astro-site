@@ -1,9 +1,9 @@
 export const prerender = false;
 
 import type { APIContext } from 'astro';
-import { getWebsiteContext } from '../../lib/knowledge';
-import { profile, contact, careerTimeline, milestones, stats } from '../../data/profile';
 import { services, techExpertise } from '../../data/info';
+import { careerTimeline, contact, milestones, profile, stats } from '../../data/profile';
+import { getWebsiteContext } from '../../lib/knowledge';
 
 /** Build the "About" block from shared data */
 function buildAboutBlock(): string {
@@ -32,9 +32,14 @@ function buildMilestonesBlock(): string {
   return milestones.map((m) => `- ${m}`).join('\n');
 }
 
-export async function POST({ request, env }: APIContext & { env: any }) {
+interface ChatMessage {
+  role: string;
+  content: string;
+}
+
+export async function POST({ request, env }: APIContext & { env: Record<string, unknown> }) {
   try {
-    const { messages } = (await request.json()) as { messages: any[] };
+    const { messages } = (await request.json()) as { messages: ChatMessage[] };
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Invalid messages format' }), { status: 400 });
@@ -42,7 +47,7 @@ export async function POST({ request, env }: APIContext & { env: any }) {
 
     const rawApiKey =
       import.meta.env.OPENROUTER_API_KEY ||
-      (env as any)?.OPENROUTER_API_KEY ||
+      (env as Record<string, unknown>)?.OPENROUTER_API_KEY ||
       process.env.OPENROUTER_API_KEY;
     const apiKey = rawApiKey?.trim();
 
