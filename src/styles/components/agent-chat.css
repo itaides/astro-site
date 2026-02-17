@@ -86,9 +86,8 @@ agent-chat {
 }
 
 .agent-widget-container.open .agent-trigger-btn {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.9);
+  border-radius: 50%;
+  padding: 0;
 }
 
 .agent-trigger-icon {
