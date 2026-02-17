@@ -1,69 +1,19 @@
 ---
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Agent from "../components/Agent.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects as allProjects } from "../data/projects";
+import { services, techStack } from "../data/info";
+import { profile, clients, testimonials } from "../data/profile";
 
-const projects = [
-  {
-    title: 'The Kibbutz',
-    category: 'Branding & Web',
-    year: '2024',
-    description:
-      'A purpose-driven digital platform amplifying awareness for Jewish community safety — now reaching audiences in 30+ countries.',
-    image: '/images/projects/archivekibbutz.jpg',
-  },
-  {
-    title: 'Oh My Box',
-    category: 'E-Commerce',
-    year: '2023',
-    description:
-      'Full brand + WooCommerce store for curated date-night boxes — from logo to conversion-optimised checkout.',
-    image: '/images/projects/ohmybox-showcase.jpg',
-  },
-  {
-    title: 'Give a Smile',
-    category: 'Social Impact',
-    year: '2023',
-    description:
-      'A gifting platform where every purchase partners with a charity — product builder, checkout, and charity integration.',
-    image: '/images/projects/voucher-section.jpg',
-  },
-];
-
-/* Hick's Law: 6 → 4 services. Strategy merged into each. Performance folded into Ongoing. */
-const services = [
-  {
-    num: '01',
-    title: 'Distributed Systems & SaaS Architecture',
-    tags: ['Golang', 'Node.js', 'Hono', 'TypeScript', 'AWS'],
-    desc: 'High-throughput, fault-tolerant architectures. I build scalable backends using Golang for core services and Node.js/Hono for edge performance, deployed on AWS and Cloudflare.',
-  },
-  {
-    num: '02',
-    title: 'AI & ML Integration',
-    tags: ['AWS Rekognition', 'LangChain', 'Vector DBs', 'LLM Features'],
-    desc: 'Production AI features — facial recognition, LLM-powered assistants, and semantic search integrated into web applications.',
-  },
-  {
-    num: '03',
-    title: 'WordPress & E-Commerce',
-    tags: ['Sage / Roots', 'ACF', 'WooCommerce', 'Headless'],
-    desc: 'Custom WordPress themes with Sage/Roots and ACF. E-commerce with WooCommerce or headless setups with a React frontend.',
-  },
-  {
-    num: '04',
-    title: 'Ongoing Partnership',
-    tags: ['CI/CD', 'Performance', 'Monitoring', 'Direct Access'],
-    desc: 'Same senior engineer, long-term. Maintenance, CI/CD pipelines, Core Web Vitals optimisation, and infrastructure — direct access, full context.',
-  },
-];
-
-const techStack = [
-  { label: 'Frontend', items: 'React · Next.js · Vue · Astro · TypeScript' },
-  { label: 'Backend', items: 'Golang · Node.js · Hono · Python' },
-  { label: 'Cloud', items: 'AWS · S3 · Cloudflare · Docker · CI/CD' },
-  { label: 'AI', items: 'AWS Rekognition · LangChain · Vector DBs' },
-];
+const projects = allProjects.map((p) => ({
+	title: p.title,
+	category: p.category,
+	year: p.year,
+	description: p.description,
+	image: p.image,
+}));
 ---
 
 <BaseLayout title="Itai Ben Zeev — Fullstack Developer | Arctica Digital">
@@ -316,24 +266,9 @@ const techStack = [
 	<section class="partners-section">
 		<div class="marquee-partners">
 			<div class="marquee-track-partners">
-				<span>Oh My Box</span><span class="sep">·</span>
-				<span>Studio Lusso</span><span class="sep">·</span>
-				<span>Habite</span><span class="sep">·</span>
-				<span>Stonegate</span><span class="sep">·</span>
-				<span>Itzhaki</span><span class="sep">·</span>
-				<span>Etrog</span><span class="sep">·</span>
-				<span>The Grinder</span><span class="sep">·</span>
-				<span>Estar Medical</span><span class="sep">·</span>
-				<span>Give a Smile</span><span class="sep">·</span>
-				<span>Minrav</span><span class="sep">·</span>
-				<span>Oh My Box</span><span class="sep">·</span>
-				<span>Studio Lusso</span><span class="sep">·</span>
-				<span>Habite</span><span class="sep">·</span>
-				<span>Stonegate</span><span class="sep">·</span>
-				<span>Itzhaki</span><span class="sep">·</span>
-				<span>Etrog</span><span class="sep">·</span>
-				<span>The Grinder</span><span class="sep">·</span>
-				<span>Estar Medical</span><span class="sep">·</span>
+				{[...clients, ...clients].map((c) => (
+					<><span>{c}</span><span class="sep">·</span></>
+				))}
 			</div>
 		</div>
 	</section>
@@ -359,15 +294,13 @@ const techStack = [
 						></path></svg
 					>
 					<blockquote class="testimonial-quote">
-						It's better than I could have ever imagined. The
-						collaboration was fluid, thanks to the understanding and
-						professionalism of working directly with Itai.
+						{testimonials[0].quote}
 					</blockquote>
 					<div class="testimonial-author">
-						<div class="author-avatar">LF</div>
+						<div class="author-avatar">{testimonials[0].initials}</div>
 						<div>
-							<strong>Lisa Fellous</strong><span
-								>Graphic Designer</span
+							<strong>{testimonials[0].name}</strong><span
+								>{testimonials[0].role}</span
 							>
 						</div>
 					</div>
@@ -376,5 +309,6 @@ const techStack = [
 		</div>
 	</section>
 
+	<Agent />
 	<Footer slot="footer" />
 </BaseLayout>

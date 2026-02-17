@@ -1,53 +1,9 @@
 ---
+import { capabilities, techExpertise, concerns } from '../data/info';
+import { profile, stats } from '../data/profile';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const capabilities = [
-  {
-    num: '01',
-    title: 'SaaS & Web Applications',
-    desc: 'Complete product development — Golang, Node.js, TypeScript, AWS, PostgreSQL.',
-  },
-  {
-    num: '02',
-    title: 'AI & ML Integration',
-    desc: 'Facial recognition, LLMs, vector databases — production AI in web applications.',
-  },
-  {
-    num: '03',
-    title: 'WordPress & E-Commerce',
-    desc: 'Custom themes with Sage/Roots, ACF, WooCommerce, and headless setups.',
-  },
-  {
-    num: '04',
-    title: 'Ongoing Partnership',
-    desc: 'CI/CD pipelines, Core Web Vitals, infrastructure, monitoring — direct access.',
-  },
-];
-
-/* Miller's Law: top 4 per category */
-const techExpertise = {
-  frontend: ['React', 'Next.js', 'TypeScript', 'Astro'],
-  backend: ['Golang', 'Node.js', 'Hono', 'PostgreSQL'],
-  cloud: ['AWS', 'S3', 'Docker', 'Kubernetes', 'CI/CD'],
-  ai: ['AWS Rekognition', 'LangChain', 'Vector DBs', 'LLM Integration'],
-};
-
-const concerns = [
-  {
-    q: '"What if you\'re too busy?"',
-    a: "I take on a limited number of projects to ensure every client gets my full attention. Selectivity means you're never competing for my time with 20 other projects.",
-  },
-  {
-    q: '"Can one person handle complex projects?"',
-    a: "I've built complete SaaS platforms with AI integration and enterprise web applications. At Riskified, I work on systems handling millions of transactions — complexity is my daily work.",
-  },
-  {
-    q: '"Aren\'t you slower than an agency?"',
-    a: 'Typically faster. No bureaucracy, no approval chains. One engineer with full codebase ownership and CI/CD automation moves faster than a distributed team with coordination overhead.',
-  },
-];
 ---
 
 <BaseLayout
@@ -119,26 +75,12 @@ const concerns = [
 	<section class="stats-strip">
 		<div class="container">
 			<div class="stats-grid reveal-stagger">
-				<div class="stat-card">
-					<span class="stat-value gradient-text">7+</span><span
-						class="stat-label">Years Experience</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">50+</span><span
-						class="stat-label">Projects Shipped</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">High</span><span
-						class="stat-label">Scale Systems</span
-					>
-				</div>
-				<div class="stat-card">
-					<span class="stat-value gradient-text">Direct</span><span
-						class="stat-label">Access Always</span
-					>
-				</div>
+				{stats.map((s) => (
+					<div class="stat-card">
+						<span class="stat-value gradient-text">{s.value}</span>
+						<span class="stat-label">{s.label}</span>
+					</div>
+				))}
 			</div>
 		</div>
 	</section>
@@ -253,15 +195,14 @@ const concerns = [
 		<div class="container">
 			<div class="philosophy-card reveal-up">
 				<span class="section-number">05 — My Approach</span>
-				<h2 class="philosophy-quote">
-					Every project I take carries my name. <span
-						class="text-outline"
-						>That's the best quality guarantee I can offer.</span
-					>
-				</h2>
+				<h2 class="philosophy-quote" set:html={
+					profile.philosophyQuote.replace(
+						"That's the best quality guarantee I can offer.",
+						`<span class="text-outline">That's the best quality guarantee I can offer.</span>`
+					)
+				} />
 				<p class="philosophy-desc">
-					Technical excellence without over-engineering. DRY code,
-					clean architecture, and systems built to scale.
+					{profile.philosophySubtext}
 				</p>
 				<a href="/contact" class="btn btn--primary philosophy-btn">
 					<span>Let's talk about your project</span>
