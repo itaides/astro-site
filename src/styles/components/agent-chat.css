@@ -846,5 +846,18 @@ agent-chat {
   }
 }
 
+/* --- Reduced Motion (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce) {
+  .agent-trigger-btn,
+  .agent-container,
+  .agent-message,
+  .agent-dot,
+  .agent-pulse-dot,
+  .agent-suggestion-chip {
+    animation: none;
+    transition: none;
+  }
+}
+
 /* --- Utilities --- */
 .agent-hidden { display: none !important; }

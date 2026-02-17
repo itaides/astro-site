@@ -107,3 +107,27 @@
     transform: translateX(-50%);
   }
 }
+
+/* --- Reduced Motion (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .marquee-track,
+  .marquee-track-partners {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

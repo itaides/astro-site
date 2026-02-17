@@ -37,7 +37,9 @@ const projects = allProjects.map((p) => ({
 							playMode="normal"
 							loop
 							autoplay
-							class="hero-mascot"></dotlottie-player> modern</span
+							class="hero-mascot"
+							aria-hidden="true"
+							role="img"></dotlottie-player> modern</span
 					>
 					<span class="hero-line"
 						>web <em class="hero-italic">experiences</em><span
@@ -267,7 +269,7 @@ const projects = allProjects.map((p) => ({
 		<div class="marquee-partners">
 			<div class="marquee-track-partners">
 				{[...clients, ...clients].map((c) => (
-					<><span>{c}</span><span class="sep">·</span></>
+					<><span>{c}</span><span class="sep" aria-hidden="true">·</span></>
 				))}
 			</div>
 		</div>
@@ -287,6 +289,7 @@ const projects = allProjects.map((p) => ({
 						fill="none"
 						stroke="currentColor"
 						stroke-width="1.5"
+						aria-hidden="true"
 						><path
 							d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"
 						></path><path

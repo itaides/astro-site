@@ -1089,6 +1089,8 @@ class AgentChat extends HTMLElement {
 
 		const chatWindow = document.createElement("div");
 		chatWindow.className = "agent-container";
+		chatWindow.setAttribute("role", "dialog");
+		chatWindow.setAttribute("aria-label", "Arctica AI Chat");
 
 		// Header
 		const header = document.createElement("div");
@@ -1129,11 +1131,13 @@ class AgentChat extends HTMLElement {
 		const clearBtn = document.createElement("button");
 		clearBtn.className = "agent-icon-btn agent-clear-btn";
 		clearBtn.title = "New chat";
+		clearBtn.setAttribute("aria-label", "New chat");
 		const clearSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		clearSvg.setAttribute("width", "16"); clearSvg.setAttribute("height", "16");
 		clearSvg.setAttribute("viewBox", "0 0 24 24"); clearSvg.setAttribute("fill", "none");
 		clearSvg.setAttribute("stroke", "currentColor"); clearSvg.setAttribute("stroke-width", "2");
 		clearSvg.setAttribute("stroke-linecap", "round"); clearSvg.setAttribute("stroke-linejoin", "round");
+		clearSvg.setAttribute("aria-hidden", "true");
 		const clearPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		clearPath.setAttribute("d", "M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2");
 		clearSvg.appendChild(clearPath);
@@ -1142,11 +1146,13 @@ class AgentChat extends HTMLElement {
 		const closeBtn = document.createElement("button");
 		closeBtn.className = "agent-icon-btn agent-header-close-btn";
 		closeBtn.title = "Close";
+		closeBtn.setAttribute("aria-label", "Close chat");
 		const closeSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		closeSvg.setAttribute("width", "18"); closeSvg.setAttribute("height", "18");
 		closeSvg.setAttribute("viewBox", "0 0 24 24"); closeSvg.setAttribute("fill", "none");
 		closeSvg.setAttribute("stroke", "currentColor"); closeSvg.setAttribute("stroke-width", "2");
 		closeSvg.setAttribute("stroke-linecap", "round"); closeSvg.setAttribute("stroke-linejoin", "round");
+		closeSvg.setAttribute("aria-hidden", "true");
 		const closeLine1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
 		closeLine1.setAttribute("x1", "18"); closeLine1.setAttribute("y1", "6");
 		closeLine1.setAttribute("x2", "6"); closeLine1.setAttribute("y2", "18");
@@ -1191,6 +1197,9 @@ class AgentChat extends HTMLElement {
 		// Messages
 		const messages = document.createElement("div");
 		messages.className = "agent-messages";
+		messages.setAttribute("role", "log");
+		messages.setAttribute("aria-label", "Chat messages");
+		messages.setAttribute("aria-live", "polite");
 
 		// History view
 		const historyView = document.createElement("div");
@@ -1304,6 +1313,7 @@ class AgentChat extends HTMLElement {
 		const micBtn = document.createElement("button");
 		micBtn.className = "agent-mic-btn";
 		micBtn.title = "Voice Mode";
+		micBtn.setAttribute("aria-label", "Voice input");
 		const micSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		micSvg.setAttribute("width", "18"); micSvg.setAttribute("height", "18");
 		micSvg.setAttribute("viewBox", "0 0 24 24"); micSvg.setAttribute("fill", "none");
@@ -1327,15 +1337,18 @@ class AgentChat extends HTMLElement {
 		input.type = "text";
 		input.className = "agent-input";
 		input.placeholder = "Ask anything...";
+		input.setAttribute("aria-label", "Chat message input");
 
 		const sendBtn = document.createElement("button");
 		sendBtn.className = "agent-send-btn";
 		sendBtn.title = "Send";
+		sendBtn.setAttribute("aria-label", "Send message");
 		const sendSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		sendSvg.setAttribute("width", "16"); sendSvg.setAttribute("height", "16");
 		sendSvg.setAttribute("viewBox", "0 0 24 24"); sendSvg.setAttribute("fill", "none");
 		sendSvg.setAttribute("stroke", "currentColor"); sendSvg.setAttribute("stroke-width", "2");
 		sendSvg.setAttribute("stroke-linecap", "round"); sendSvg.setAttribute("stroke-linejoin", "round");
+		sendSvg.setAttribute("aria-hidden", "true");
 		const sendPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		sendPath.setAttribute("d", "M5 12h14M12 5l7 7-7 7");
 		sendSvg.appendChild(sendPath);
@@ -1358,6 +1371,7 @@ class AgentChat extends HTMLElement {
 		// Trigger button
 		const triggerBtn = document.createElement("button");
 		triggerBtn.className = "agent-trigger-btn";
+		triggerBtn.setAttribute("aria-label", "Open Arctica AI chat");
 
 		const triggerIcon = document.createElement("span");
 		triggerIcon.className = "agent-trigger-icon";
@@ -1366,6 +1380,7 @@ class AgentChat extends HTMLElement {
 		triggerSvg.setAttribute("viewBox", "0 0 24 24"); triggerSvg.setAttribute("fill", "none");
 		triggerSvg.setAttribute("stroke", "currentColor"); triggerSvg.setAttribute("stroke-width", "1.5");
 		triggerSvg.setAttribute("stroke-linecap", "round"); triggerSvg.setAttribute("stroke-linejoin", "round");
+		triggerSvg.setAttribute("aria-hidden", "true");
 		const triggerPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		triggerPath.setAttribute("d", "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z");
 		triggerSvg.appendChild(triggerPath);
