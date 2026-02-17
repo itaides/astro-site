@@ -7,71 +7,71 @@ import { getWebsiteContext } from '../../lib/knowledge';
 
 /** Build the "About" block from shared data */
 function buildAboutBlock(): string {
-    const statLine = stats.map((s) => `${s.value} ${s.label}`).join(', ');
-    const coreStack = [
-        ...techExpertise.frontend,
-        ...techExpertise.backend.filter((t) => !techExpertise.frontend.includes(t)),
-    ].join(', ');
+  const statLine = stats.map((s) => `${s.value} ${s.label}`).join(', ');
+  const coreStack = [
+    ...techExpertise.frontend,
+    ...techExpertise.backend.filter((t) => !techExpertise.frontend.includes(t)),
+  ].join(', ');
 
-    return [
-        `- ${profile.title}, ${statLine}`,
-        `- Works at Riskified (enterprise-scale systems handling millions of transactions)`,
-        `- Runs ${profile.brand} as his freelance practice on the side`,
-        `- Philosophy: **"${profile.philosophy}"** — ${profile.philosophyDesc}`,
-        `- Core stack: ${coreStack}`,
-        `- Specialties: ${services.map((s) => s.title).join(', ')}`,
-        `- Contact: ${contact.email} | LinkedIn: ${contact.linkedinHandle}`,
-    ].join('\n');
+  return [
+    `- ${profile.title}, ${statLine}`,
+    `- Works at Riskified (enterprise-scale systems handling millions of transactions)`,
+    `- Runs ${profile.brand} as his freelance practice on the side`,
+    `- Philosophy: **"${profile.philosophy}"** — ${profile.philosophyDesc}`,
+    `- Core stack: ${coreStack}`,
+    `- Specialties: ${services.map((s) => s.title).join(', ')}`,
+    `- Contact: ${contact.email} | LinkedIn: ${contact.linkedinHandle}`,
+  ].join('\n');
 }
 
 function buildTimelineBlock(): string {
-    return careerTimeline.map((t) => `- **${t.period}:** ${t.role} — ${t.description}`).join('\n');
+  return careerTimeline.map((t) => `- **${t.period}:** ${t.role} — ${t.description}`).join('\n');
 }
 
 function buildMilestonesBlock(): string {
-    return milestones.map((m) => `- ${m}`).join('\n');
+  return milestones.map((m) => `- ${m}`).join('\n');
 }
 
 interface ChatMessage {
-    role: string;
-    content: string;
+  role: string;
+  content: string;
 }
 
 export async function POST({ request, env }: APIContext & { env: Record<string, unknown> }) {
-    try {
-        const { messages } = (await request.json()) as { messages: ChatMessage[] };
+  try {
+    const { messages } = (await request.json()) as { messages: ChatMessage[] };
 
-        if (!messages || !Array.isArray(messages)) {
-            return new Response(JSON.stringify({ error: 'Invalid messages format' }), { status: 400 });
-        }
+    if (!messages || !Array.isArray(messages)) {
+      return new Response(JSON.stringify({ error: 'Invalid messages format' }), { status: 400 });
+    }
 
-        const rawApiKey =
-            import.meta.env.OPENROUTER_API_KEY || (env as Record<string, unknown>)?.OPENROUTER_API_KEY;
-        const apiKey = (rawApiKey as string)?.trim();
+    const rawApiKey =
+      import.meta.env.OPENROUTER_API_KEY || (env as Record<string, unknown>)?.OPENROUTER_API_KEY;
+    const apiKey = (rawApiKey as string)?.trim();
 
-        if (!apiKey) {
-            return new Response(JSON.stringify({ error: 'Missing OpenRouter API Key' }), { status: 500 });
-        }
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'Missing OpenRouter API Key' }), { status: 500 });
+    }
 
-        const contextItems = await getWebsiteContext();
+    const contextItems = await getWebsiteContext();
 
-        // Structure context by type for cleaner injection
-        const blogContext = contextItems
-            .filter((i) => i.type === 'blog')
-            .map((i) => `- "${i.title}" (${i.url}): ${i.excerpt || i.content?.slice(0, 200)}`)
-            .join('\n');
+    // Structure context by type for cleaner injection
+    const blogContext = contextItems
+      .filter((i) => i.type === 'blog')
+      .map((i) => `- "${i.title}" (${i.url}): ${i.excerpt || i.content?.slice(0, 200)}`)
+      .join('\n');
 
-        const projectContext = contextItems
-            .filter((i) => i.type === 'project')
-            .map((i) => `- ${i.title}: ${i.content}`)
-            .join('\n');
+    const projectContext = contextItems
+      .filter((i) => i.type === 'project')
+      .map((i) => `- ${i.title}: ${i.content}`)
+      .join('\n');
 
-        const pageContext = contextItems
-            .filter((i) => i.type === 'page')
-            .map((i) => `- ${i.title} (${i.url}): ${i.content}`)
-            .join('\n');
+    const pageContext = contextItems
+      .filter((i) => i.type === 'page')
+      .map((i) => `- ${i.title} (${i.url}): ${i.content}`)
+      .join('\n');
 
-        const systemPrompt = `You are **Arctica AI** — the personal assistant on ${profile.name}'s portfolio site (${profile.domain}).
+    const systemPrompt = `You are **Arctica AI** — the personal assistant on ${profile.name}'s portfolio site (${profile.domain}).
 
 ## Who You Are
 You're sharp, warm, and genuinely enthusiastic about great engineering. Think of yourself as a knowledgeable colleague who's excited to show off ${profile.name}'s work — not a salesperson. You speak casually but with substance. You use short paragraphs, not walls of text.
@@ -139,55 +139,55 @@ Eventimio is ${profile.name.split(' ')[0]}'s flagship project — an AI-powered 
 
 **Remember:** The JSON goes on its own line after your intro text. No markdown code fences. One component per response. ALWAYS use a component when possible — only skip it for very short yes/no answers or greetings.`;
 
-        // Inject a reminder before the last user message to reinforce component usage
-        const componentReminder = {
-            role: 'system',
-            content:
-                'REMINDER: You MUST use a rich component (ProjectCard, List, DataCard, Table, Action, Layout) in your response. Write a short intro sentence, then output the JSON on its own line. Do NOT use plain text lists or bullet points — use the List component instead. Do NOT describe projects in plain text — use ProjectCard. Only skip components for simple greetings or yes/no answers.',
-        };
+    // Inject a reminder before the last user message to reinforce component usage
+    const componentReminder = {
+      role: 'system',
+      content:
+        'REMINDER: You MUST use a rich component (ProjectCard, List, DataCard, Table, Action, Layout) in your response. Write a short intro sentence, then output the JSON on its own line. Do NOT use plain text lists or bullet points — use the List component instead. Do NOT describe projects in plain text — use ProjectCard. Only skip components for simple greetings or yes/no answers.',
+    };
 
-        const apiMessages = [
-            { role: 'system', content: systemPrompt },
-            ...messages.slice(0, -1),
-            componentReminder,
-            ...messages.slice(-1),
-        ];
+    const apiMessages = [
+      { role: 'system', content: systemPrompt },
+      ...messages.slice(0, -1),
+      componentReminder,
+      ...messages.slice(-1),
+    ];
 
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${apiKey}`,
-                'HTTP-Referer': `https://${profile.domain}`,
-                'X-Title': `${profile.brand} Agent`,
-            },
-            body: JSON.stringify({
-                model: 'openai/gpt-4o',
-                messages: apiMessages,
-                temperature: 0.6,
-                max_tokens: 1024,
-                stream: true,
-            }),
-        });
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': `https://${profile.domain}`,
+        'X-Title': `${profile.brand} Agent`,
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-4o',
+        messages: apiMessages,
+        temperature: 0.6,
+        max_tokens: 1024,
+        stream: true,
+      }),
+    });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('OpenRouter API Error:', errorText);
-            return new Response(JSON.stringify({ error: `OpenRouter API error: ${errorText}` }), {
-                status: response.status,
-            });
-        }
-
-        return new Response(response.body, {
-            status: 200,
-            headers: {
-                'Content-Type': 'text/event-stream',
-                'Cache-Control': 'no-cache',
-                Connection: 'keep-alive',
-            },
-        });
-    } catch (error) {
-        console.error('API Error:', error);
-        return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('OpenRouter API Error:', errorText);
+      return new Response(JSON.stringify({ error: `OpenRouter API error: ${errorText}` }), {
+        status: response.status,
+      });
     }
+
+    return new Response(response.body, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
+  } catch (error) {
+    console.error('API Error:', error);
+    return new Response(JSON.stringify({ error: 'Internal Server Error' }), { status: 500 });
+  }
 }
