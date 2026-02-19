@@ -1071,7 +1071,7 @@ class AgentChat extends HTMLElement {
       }
     };
 
-    this.recognition.onend = () => { };
+    this.recognition.onend = () => {};
 
     // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognitionEvent type is not standard
     this.recognition.onresult = (event: any) => {
