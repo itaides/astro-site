@@ -611,9 +611,11 @@ class AgentChat extends HTMLElement {
     return { text: content, component: null };
   }
 
-  speak(text: string) {
-    if (!window.speechSynthesis || this.isMuted) return;
-    window.speechSynthesis.cancel();
+  async speak(text: string) {
+    if (this.isMuted) return;
+
+    // stop any currently playing audio
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
 
     let spokenText = text;
     try {
@@ -631,37 +633,30 @@ class AgentChat extends HTMLElement {
 
     if (!spokenText) return;
 
-    const utterance = new SpeechSynthesisUtterance(spokenText);
+    try {
+      const response = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: spokenText }),
+      });
 
-    const selectVoice = () => {
-      const voices = window.speechSynthesis.getVoices();
-      if (!voices.length) return null;
-
-      const preferences = [
-        'Samantha',
-        'Alex',
-        'Karen',
-        'Daniel',
-        'Google US English',
-        'Google UK English',
-        'Microsoft Zira',
-        'Microsoft David',
-      ];
-
-      for (const pref of preferences) {
-        const match = voices.find((v) => v.name.includes(pref));
-        if (match) return match;
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`TTS request failed: ${response.status} ${errText}`);
       }
 
-      const englishVoice = voices.find((v) => v.lang.startsWith('en'));
-      return englishVoice || voices[0];
-    };
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
 
-    const voice = selectVoice();
-    if (voice) utterance.voice = voice;
-    utterance.rate = 1.05;
-    utterance.pitch = 1;
-    window.speechSynthesis.speak(utterance);
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+      };
+
+      await audio.play();
+    } catch (e) {
+      console.error('TTS playback error:', e);
+    }
   }
 
   updateMessageContent(index: number, content: string) {
@@ -1076,7 +1071,7 @@ class AgentChat extends HTMLElement {
       }
     };
 
-    this.recognition.onend = () => {};
+    this.recognition.onend = () => { };
 
     // biome-ignore lint/suspicious/noExplicitAny: SpeechRecognitionEvent type is not standard
     this.recognition.onresult = (event: any) => {
