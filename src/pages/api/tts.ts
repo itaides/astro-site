@@ -2,16 +2,19 @@ export const prerender = false;
 
 import type { APIContext } from 'astro';
 
-export async function POST({ request, env }: APIContext & { env: Record<string, unknown> }) {
+export async function POST(context: APIContext) {
   try {
+    const { request } = context;
     const { text, voiceId } = (await request.json()) as { text: string; voiceId?: string };
 
     if (!text) {
       return new Response(JSON.stringify({ error: 'Missing text' }), { status: 400 });
     }
 
-    const apiKey =
-      import.meta.env.ELEVENLABS_API_KEY || (env as Record<string, unknown>)?.ELEVENLABS_API_KEY;
+    // In Cloudflare Pages SSR, runtime secrets are available via locals.runtime.env
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const runtimeEnv = (context.locals as any)?.runtime?.env as Record<string, string> | undefined;
+    const apiKey = import.meta.env.ELEVENLABS_API_KEY || runtimeEnv?.ELEVENLABS_API_KEY;
 
     if (!apiKey) {
       console.error('Missing ElevenLabs API Key in env');
