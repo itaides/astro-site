@@ -37,16 +37,19 @@ interface ChatMessage {
   content: string;
 }
 
-export async function POST({ request, env }: APIContext & { env: Record<string, unknown> }) {
+export async function POST(context: APIContext) {
   try {
+    const { request } = context;
     const { messages } = (await request.json()) as { messages: ChatMessage[] };
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Invalid messages format' }), { status: 400 });
     }
 
-    const rawApiKey =
-      import.meta.env.OPENROUTER_API_KEY || (env as Record<string, unknown>)?.OPENROUTER_API_KEY;
+    // In Cloudflare Pages SSR, runtime secrets are available via locals.runtime.env
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const runtimeEnv = (context.locals as any)?.runtime?.env as Record<string, string> | undefined;
+    const rawApiKey = import.meta.env.OPENROUTER_API_KEY || runtimeEnv?.OPENROUTER_API_KEY;
     const apiKey = (rawApiKey as string)?.trim();
 
     if (!apiKey) {
