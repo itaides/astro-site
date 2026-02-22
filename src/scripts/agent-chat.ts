@@ -395,7 +395,42 @@ class AgentChat extends HTMLElement {
     }
   }
 
+  /** Client-side rate limiter — 10 messages per 60 seconds (sessionStorage) */
+  checkClientRateLimit(): boolean {
+    const KEY = 'arctica_rl_timestamps';
+    const MAX = 10;
+    const WINDOW_MS = 60_000;
+    const now = Date.now();
+
+    let timestamps: number[] = [];
+    try {
+      timestamps = JSON.parse(sessionStorage.getItem(KEY) || '[]');
+    } catch (_) {
+      /* ignore */
+    }
+
+    // Prune entries outside the window
+    timestamps = timestamps.filter((t) => now - t < WINDOW_MS);
+
+    if (timestamps.length >= MAX) return false;
+
+    timestamps.push(now);
+    sessionStorage.setItem(KEY, JSON.stringify(timestamps));
+    return true;
+  }
+
   async sendMessage(isVoice = false, skipInputRead = false) {
+    // Rate limit check (client-side, sessionStorage)
+    if (!this.checkClientRateLimit()) {
+      this.addMessage({
+        role: 'assistant',
+        content: "You're sending messages too fast — give it a moment and try again 😊",
+      });
+      if (isVoice && !this.isMuted)
+        this.speak("You're sending messages too fast. Please wait a moment.");
+      return;
+    }
+
     let text = '';
 
     if (!skipInputRead) {
@@ -426,7 +461,36 @@ class AgentChat extends HTMLElement {
         }),
       });
 
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) {
+        // Parse server error message for a friendly response
+        let serverMsg = '';
+        try {
+          const errBody = (await response.clone().json()) as { error?: string };
+          serverMsg = errBody?.error || '';
+        } catch (_) {
+          /* ignore */
+        }
+
+        if (response.status === 429) {
+          this.addMessage({
+            role: 'assistant',
+            content: "You're sending messages too fast — give it a moment and try again 😊",
+          });
+          if (isVoice && !this.isMuted)
+            this.speak("You're sending messages too fast. Please wait a moment.");
+          return;
+        }
+
+        if (response.status === 400 && serverMsg.toLowerCase().includes('conversation too long')) {
+          this.addMessage({
+            role: 'assistant',
+            content: 'This conversation is getting long! Start a new chat to keep things fresh.',
+          });
+          return;
+        }
+
+        throw new Error(serverMsg || 'Network response was not ok');
+      }
 
       const assistantMsgIndex = this.messages.length;
       this.addMessage({ role: 'assistant', content: '' });
@@ -952,10 +1016,32 @@ class AgentChat extends HTMLElement {
     const sendBtn = this.querySelector('.agent-send-btn') as HTMLElement;
     if (!input || !sendBtn) return;
 
-    if (input.value.trim()) {
+    const len = input.value.length;
+    const overLimit = len > 1000;
+
+    if (input.value.trim() && !overLimit) {
       sendBtn.classList.add('has-text');
     } else {
       sendBtn.classList.remove('has-text');
+    }
+
+    // Character counter
+    let counter = this.querySelector('.agent-char-counter') as HTMLElement | null;
+    if (!counter) {
+      counter = document.createElement('div');
+      counter.className = 'agent-char-counter';
+      input.parentElement?.appendChild(counter);
+    }
+
+    if (len > 800) {
+      counter.textContent = `${len} / 1000`;
+      counter.classList.toggle('over-limit', overLimit);
+      counter.style.display = 'block';
+      if (overLimit) input.setAttribute('aria-invalid', 'true');
+      else input.removeAttribute('aria-invalid');
+    } else {
+      counter.style.display = 'none';
+      input.removeAttribute('aria-invalid');
     }
   }
 
@@ -987,9 +1073,9 @@ class AgentChat extends HTMLElement {
       },
     );
 
-    this.querySelector('.agent-input')?.addEventListener('input', () =>
-      this.updateSendButtonState(),
-    );
+    this.querySelector('.agent-input')?.addEventListener('input', () => {
+      this.updateSendButtonState();
+    });
 
     const chips = this.querySelectorAll('.agent-suggestion-chip');
     chips.forEach((chip) => {
