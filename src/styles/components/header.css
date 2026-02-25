@@ -216,6 +216,28 @@
   color: var(--color-text-muted);
 }
 
+/* Close button for mobile nav overlay */
+.nav-close {
+  position: absolute;
+  top: 1rem;
+  right: var(--container-padding);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  z-index: 110;
+  transition: color var(--transition-fast);
+}
+
+.nav-close:hover {
+  color: var(--color-accent);
+}
+
 .nav-backdrop {
   display: none;
 }
