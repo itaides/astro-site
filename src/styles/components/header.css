@@ -143,6 +143,27 @@
   transform: rotate(-45deg) translate(2.5px, -2.5px);
 }
 
+/* Overlay close button */
+.nav-close {
+  position: absolute;
+  top: calc((var(--header-height) - 40px) / 2);
+  right: var(--container-padding);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text);
+  z-index: 110;
+  border-radius: var(--radius-pill);
+  transition: background var(--transition-fast);
+}
+
+.nav-close:hover {
+  background: var(--color-surface-hover);
+}
+
 /* Overlay */
 .nav-overlay-menu {
   position: fixed;

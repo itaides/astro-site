@@ -149,6 +149,9 @@ const {
 					};
 
 					navToggle.addEventListener("click", () => toggleMenu());
+					document
+						.getElementById("nav-close")
+						?.addEventListener("click", () => toggleMenu(true));
 					navOverlay?.addEventListener("click", () =>
 						toggleMenu(true),
 					);
