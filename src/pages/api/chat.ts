@@ -64,8 +64,7 @@ export async function POST(context: APIContext) {
     const { messages } = parsed.data;
 
     // In Cloudflare Pages SSR, runtime secrets are available via locals.runtime.env
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const runtimeEnv = (context.locals as any)?.runtime?.env as Record<string, string> | undefined;
+    const runtimeEnv = context.locals.runtime?.env;
     const rawApiKey = import.meta.env.OPENROUTER_API_KEY || runtimeEnv?.OPENROUTER_API_KEY;
     const apiKey = (rawApiKey as string)?.trim();
 

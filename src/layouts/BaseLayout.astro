@@ -131,32 +131,32 @@ const {
 
 				if (navToggle && navMenu) {
 					const toggleMenu = (open?: boolean) => {
-						const isOpen =
+						const shouldOpen =
 							typeof open === "boolean"
 								? open
-								: navMenu.classList.contains("open");
-						if (isOpen) {
-							navMenu.classList.remove("open");
-							navOverlay?.classList.remove("open");
-							navToggle.setAttribute("aria-expanded", "false");
-							document.body.style.overflow = "";
-						} else {
+								: !navMenu.classList.contains("open");
+						if (shouldOpen) {
 							navMenu.classList.add("open");
 							navOverlay?.classList.add("open");
 							navToggle.setAttribute("aria-expanded", "true");
 							document.body.style.overflow = "hidden";
+						} else {
+							navMenu.classList.remove("open");
+							navOverlay?.classList.remove("open");
+							navToggle.setAttribute("aria-expanded", "false");
+							document.body.style.overflow = "";
 						}
 					};
 
 					navToggle.addEventListener("click", () => toggleMenu());
 					document
 						.getElementById("nav-close")
-						?.addEventListener("click", () => toggleMenu(true));
+						?.addEventListener("click", () => toggleMenu(false));
 					navOverlay?.addEventListener("click", () =>
-						toggleMenu(true),
+						toggleMenu(false),
 					);
 					navMenu.querySelectorAll("a").forEach((link) => {
-						link.addEventListener("click", () => toggleMenu(true));
+						link.addEventListener("click", () => toggleMenu(false));
 					});
 				}
 			}

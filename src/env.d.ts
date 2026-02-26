@@ -13,4 +13,5 @@ interface Env {
     // biome-ignore lint/suspicious/noExplicitAny: EmailMessage type is global in worker scope
     send: (message: any) => Promise<void>;
   };
+  OPENROUTER_API_KEY?: string;
 }
