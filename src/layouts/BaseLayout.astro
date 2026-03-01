@@ -126,6 +126,7 @@ const {
 			// ====== Mobile Nav Toggle ======
 			function initNav() {
 				const navToggle = document.getElementById("nav-toggle");
+				const navClose = document.getElementById("nav-close");
 				const navMenu = document.getElementById("nav-menu");
 				const navOverlay = document.getElementById("nav-overlay");
 
@@ -149,11 +150,22 @@ const {
 					};
 
 					navToggle.addEventListener("click", () => toggleMenu());
+					navClose?.addEventListener("click", () => toggleMenu(true));
 					navOverlay?.addEventListener("click", () =>
 						toggleMenu(true),
 					);
 					navMenu.querySelectorAll("a").forEach((link) => {
 						link.addEventListener("click", () => toggleMenu(true));
+					});
+
+					// Add Escape key listener
+					document.addEventListener("keydown", (e) => {
+						if (
+							e.key === "Escape" &&
+							navMenu.classList.contains("open")
+						) {
+							toggleMenu(true);
+						}
 					});
 				}
 			}

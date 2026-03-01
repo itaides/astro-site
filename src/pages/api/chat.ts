@@ -1,7 +1,7 @@
 export const prerender = false;
 
-import type { APIContext } from 'astro';
 import { z } from 'astro:schema';
+import type { APIContext } from 'astro';
 import { services, techExpertise } from '../../data/info';
 import { careerTimeline, contact, milestones, profile, stats } from '../../data/profile';
 import { getWebsiteContext } from '../../lib/knowledge';

@@ -144,6 +144,30 @@
 }
 
 /* Overlay */
+.nav-close {
+  position: absolute;
+  top: calc((var(--header-height, 80px) - 40px) / 2);
+  right: var(--container-padding, 1.5rem);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  z-index: 110;
+  transition:
+    transform var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.nav-close:hover {
+  transform: scale(1.1);
+  color: var(--color-accent);
+}
+
 .nav-overlay-menu {
   position: fixed;
   top: 0;
